@@ -16,14 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Common/b2Settings.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2CircleShape.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2EdgeShape.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2ChainShape.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2PolygonShape.ts' />
-
-module box2d {
+import {ENABLE_ASSERTS, b2Assert, b2MakeNumberArray, b2_epsilon, b2_epsilon_sq, b2_maxFloat} from '../../Box2D/Common/b2Settings';
+import {b2Vec2, b2DotVV, b2Transform, b2MidVV, b2SubVV, b2DistanceVV, b2Max, b2MulXV, b2MulTRV, b2NegV, b2CrossVV, b2CrossOneV, b2CrossVOne} from '../../Box2D/Common/b2Math';
+import {b2Shape} from '../../Box2D/Collision/Shapes/b2Shape';
 
 /// A distance proxy is used by the GJK algorithm.
 /// It encapsulates any shape.
@@ -345,7 +340,7 @@ export class b2Simplex
 
 		case 2:
 			return out.SetXY(
-				this.m_v1.a * this.m_v1.w.x + this.m_v2.a * this.m_v2.w.x, 
+				this.m_v1.a * this.m_v1.w.x + this.m_v2.a * this.m_v2.w.x,
 				this.m_v1.a * this.m_v1.w.y + this.m_v2.a * this.m_v2.w.y);
 
 		case 3:
@@ -728,6 +723,3 @@ export function b2Distance(output: b2DistanceOutput, cache: b2SimplexCache, inpu
 		}
 	}
 }
-
-} // module box2d
-

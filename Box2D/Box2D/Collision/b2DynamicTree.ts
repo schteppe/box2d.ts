@@ -16,12 +16,10 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-module box2d {
-
-///<reference path='../../../Box2D/Box2D/Common/b2Settings.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2Collision.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2GrowableStack.ts' />
+import {b2Assert, ENABLE_ASSERTS, b2_aabbExtension, b2_aabbMultiplier} from '../../../Box2D/Box2D/Common/b2Settings';
+import {b2Vec2, b2Abs, b2Max, b2Min, b2DotVV, b2SubVV, b2AbsV, b2CrossOneV} from '../../../Box2D/Box2D/Common/b2Math';
+import {b2AABB, b2RayCastInput, b2TestOverlapAABB} from '../../../Box2D/Box2D/Collision/b2Collision';
+import {b2GrowableStack} from '../../../Box2D/Box2D/Common/b2GrowableStack';
 
 /// A node in the dynamic tree. The client does not interact with this directly.
 export class b2TreeNode
@@ -551,7 +549,7 @@ export class b2DynamicTree
 
 			return C;
 		}
-		
+
 		// Rotate B up
 		if (balance < -1)
 		{
@@ -818,7 +816,7 @@ export class b2DynamicTree
 
 	public RebuildBottomUp(): void
 	{
-		/* 
+		/*
 		int32* nodes = (int32*)b2Alloc(m_nodeCount * sizeof(int32));
 		int32 count = 0;
 
@@ -931,6 +929,3 @@ export class b2DynamicTree
 		*/
 	}
 }
-
-} // module box2d
-

@@ -16,15 +16,37 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Common/b2Settings.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2Distance.ts' />
+import {
+	b2MakeArray,
+	b2_maxManifoldPoints,
+	ENABLE_ASSERTS,
+	b2Assert,
+	b2_epsilon_sq,
+	b2_maxFloat,
+	b2_epsilon
+} from '../../../Box2D/Box2D/Common/b2Settings';
+import {
+	b2Vec2,
+	b2Transform,
+	b2DotVV,
+	b2MulXV,
+	b2DistanceSquaredVV,
+	b2AddVMulSV,
+	b2SubVV,
+	b2MulRV,
+	b2SubVMulSV,
+	b2MidVV,
+	b2ExtVV,
+	b2Min,
+	b2Max,
+	b2Abs
+} from '../../../Box2D/Box2D/Common/b2Math';
+import {b2Distance, b2DistanceInput, b2SimplexCache, b2DistanceOutput} from '../../../Box2D/Box2D/Collision/b2Distance';
+import {b2Shape} from '../../../Box2D/Box2D/Collision/Shapes/b2Shape';
 
 /// @file
 /// Structures and functions used for computing contact points, distance
 /// queries, and TOI queries.
-
-module box2d {
 
 export enum b2ContactFeatureType
 {
@@ -709,6 +731,3 @@ export function b2TestOverlapShape(shapeA: b2Shape, indexA: number, shapeB: b2Sh
 
 	return output.distance < 10 * b2_epsilon;
 }
-
-} // module box2d
-

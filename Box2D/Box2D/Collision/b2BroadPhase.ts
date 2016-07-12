@@ -16,12 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Common/b2Settings.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2Collision.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2DynamicTree.ts' />
-
-module box2d {
+import {b2Vec2} from '../Common/b2Math';
+import {b2AABB, b2RayCastInput, b2TestOverlapAABB} from '../Collision/b2Collision';
+import {b2TreeNode, b2DynamicTree} from '../Collision/b2DynamicTree';
 
 export class b2Pair
 {
@@ -96,7 +93,7 @@ export class b2BroadPhase
 	{
 		var aabbA = this.m_tree.GetFatAABB(proxyA);
 		var aabbB = this.m_tree.GetFatAABB(proxyB);
-		return box2d.b2TestOverlapAABB(aabbA, aabbB);
+		return b2TestOverlapAABB(aabbA, aabbB);
 	}
 
 	/// Get the number of proxies.
@@ -135,7 +132,7 @@ export class b2BroadPhase
 				// Grow the pair buffer as needed.
 				if (that.m_pairCount == that.m_pairBuffer.length)
 				{
-					that.m_pairBuffer[that.m_pairCount] = new box2d.b2Pair();
+					that.m_pairBuffer[that.m_pairCount] = new b2Pair();
 				}
 
 				var pair = that.m_pairBuffer[that.m_pairCount];
@@ -169,7 +166,7 @@ export class b2BroadPhase
 
 		// Sort the pair buffer to expose duplicates.
 		this.m_pairBuffer.length = this.m_pairCount;
-		this.m_pairBuffer.sort(box2d.b2PairLessThan);
+		this.m_pairBuffer.sort(b2PairLessThan);
 
 		// Send the pairs back to the client.
 		var i: number = 0;
@@ -266,5 +263,3 @@ export function b2PairLessThan(pair1: b2Pair, pair2: b2Pair): number
 
 	return pair1.proxyA.m_id - pair2.proxyA.m_id;
 }
-
-} // module box2d

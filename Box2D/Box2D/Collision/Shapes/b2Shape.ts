@@ -16,11 +16,10 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Common/b2Settings.ts' />
-///<reference path='../../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../../Box2D/Box2D/Collision/b2Collision.ts' />
-
-module box2d {
+import {ENABLE_ASSERTS, b2Assert} from '../../../../Box2D/Box2D/Common/b2Settings';
+import {b2Vec2, b2Transform} from '../../../../Box2D/Box2D/Common/b2Math';
+import {b2AABB, b2RayCastInput, b2RayCastOutput} from '../../../../Box2D/Box2D/Collision/b2Collision';
+import {b2DistanceProxy} from '../../../../Box2D/Box2D/Collision/b2Distance';
 
 /// This holds the mass data computed for a shape.
 export class b2MassData
@@ -141,6 +140,3 @@ export class b2Shape
 	{
 	}
 }
-
-} // module box2d
-

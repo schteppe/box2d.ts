@@ -16,8 +16,6 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-module box2d {
-
 export var DEBUG: boolean = true;
 
 export var ENABLE_ASSERTS: boolean = DEBUG;
@@ -192,6 +190,3 @@ export function b2MakeNumberArray(length: number): number[]
 {
 	return b2MakeArray(length, function (i: number): number { return 0; });
 }
-
-} // module box2d
-
