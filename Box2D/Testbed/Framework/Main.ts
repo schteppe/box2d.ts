@@ -1,8 +1,7 @@
-///<reference path='../../../Box2D/Testbed/Framework/Render.ts' />
-///<reference path='../../../Box2D/Testbed/Framework/Test.ts' />
-///<reference path='../../../Box2D/Testbed/Tests/TestEntries.ts' />
-
-module box2d.Testbed {
+import {b2Vec2, b2Max, b2DegToRad, b2SubVV, b2Clamp, b2AddVV, b2MulRV, b2MulTRV, b2MulSV} from '../../Box2D/Common/b2Math';
+import {b2_version, b2_changelist} from '../../Box2D/Common/b2Settings';
+import {TestEntry, KeyCode, Settings, Test} from './Test';
+import {GetTestEntries} from '../Tests/TestEntries';
 
 export class Main
 {
@@ -15,7 +14,7 @@ export class Main
 	public m_settings: Settings = null;
 	public m_test: Test = null;
 	public m_test_index: number = 0;
-	public m_test_entries: Testbed.TestEntry[] = null;
+	public m_test_entries: TestEntry[] = null;
 	public m_shift: number = 0;
 	public m_ctrl: number = 0;
 	public m_rMouseDown: boolean = false;
@@ -685,6 +684,3 @@ export class Main
 		}
 	}
 }
-
-} // module box2d.Testbed
-

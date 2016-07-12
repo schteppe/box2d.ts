@@ -76,8 +76,6 @@
 //goog.require('box2d.Testbed.TestRagdoll');
 //goog.require('box2d.Testbed.TestStack');
 
-module box2d.Testbed {
-
 export function GetTestEntries(entries: TestEntry[]): TestEntry[]
 {
 //	entries.push(new box2d.Testbed.TestEntry("Continuous Test", box2d.Testbed.ContinuousTest.Create));
@@ -137,8 +135,6 @@ export function GetTestEntries(entries: TestEntry[]): TestEntry[]
 //	entries.push(new box2d.Testbed.TestEntry("Continuous Collision", box2d.Testbed.TestCCD.Create));
 //	entries.push(new box2d.Testbed.TestEntry("Ragdolls", box2d.Testbed.TestRagdoll.Create));
 //	entries.push(new box2d.Testbed.TestEntry("Stacked Boxes", box2d.Testbed.TestStack.Create));
-	
+
 	return entries;
 }
-
-} // module box2d.Testbed

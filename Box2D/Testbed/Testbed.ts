@@ -16,9 +16,6 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../Box2D/Testbed/Framework/Main.ts' />
+import {Main} from '../../Box2D/Testbed/Framework/Main';
 
-module box2d.Testbed {
-
-} // module box2d.Testbed
-
+export = Main;

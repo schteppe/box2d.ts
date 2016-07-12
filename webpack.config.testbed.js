@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-	entry: path.join(__dirname, 'index.ts'),
+	entry: path.join(__dirname, 'Box2D', 'Testbed', 'Testbed.ts'),
 	output: {
 		filename: path.join(__dirname, 'dist', 'box2d.js'),
         libraryTarget: 'umd'
@@ -10,7 +10,9 @@ module.exports = {
 	resolve: {
 		extensions: ['', '.webpack.js', '.ts']
 	},
-    externals: {},
+    externals: {
+        box2d: "box2d"
+    },
 	module: {
 		loaders: [{
 			test: /\.tsx?$/,

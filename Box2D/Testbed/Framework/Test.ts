@@ -1,8 +1,3 @@
-///<reference path='../../../Box2D/Box2D/Box2D.ts' />
-///<reference path='../../../Box2D/Testbed/Framework/Render.ts' />
-
-module box2d.Testbed {
-
 export var DRAW_STRING_NEW_LINE: number = 25;
 
 export enum KeyCode
@@ -675,6 +670,3 @@ export class Test extends b2ContactListener
 		this.m_world.ShiftOrigin(newOrigin);
 	}
 }
-
-} // module Testbed
-

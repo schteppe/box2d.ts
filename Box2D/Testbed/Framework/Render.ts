@@ -18,8 +18,6 @@
 
 ///<reference path='../../../Box2D/Box2D/Box2D.ts' />
 
-module box2d.Testbed {
-
 // This class implements debug drawing callbacks that are invoked
 // inside b2World::Step.
 export class DebugDraw extends b2Draw
@@ -219,6 +217,3 @@ export class DebugDraw extends b2Draw
 		ctx.strokeRect(x, y, w, h);
 	}
 }
-
-} // module box2d.Testbed
-
