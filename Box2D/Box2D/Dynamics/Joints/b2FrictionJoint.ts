@@ -16,11 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2MulMV, b2Mat22, b2AddVCrossSV, b2MulRV, b2Clamp, b2Rot, b2Vec2, b2CrossVV, b2SubVV} from '../../Common/b2Math';
+import {DEBUG, b2Log} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
 
 /// Friction joint definition.
 export class b2FrictionJointDef extends b2JointDef
@@ -216,8 +214,8 @@ export class b2FrictionJoint extends b2Joint
 		{
 			//b2Vec2 Cdot = vB + b2Cross(wB, m_rB) - vA - b2Cross(wA, m_rA);
 			var Cdot_v2: b2Vec2 = b2SubVV(
-				b2AddVCrossSV(vB, wB, this.m_rB, b2Vec2.s_t0), 
-				b2AddVCrossSV(vA, wA, this.m_rA, b2Vec2.s_t1), 
+				b2AddVCrossSV(vB, wB, this.m_rB, b2Vec2.s_t0),
+				b2AddVCrossSV(vA, wA, this.m_rA, b2Vec2.s_t1),
 				b2FrictionJoint.SolveVelocityConstraints_s_Cdot_v2);
 
 			//b2Vec2 impulse = -b2Mul(m_linearMass, Cdot);
@@ -310,7 +308,7 @@ export class b2FrictionJoint extends b2Joint
 		{
 			var indexA = this.m_bodyA.m_islandIndex;
 			var indexB = this.m_bodyB.m_islandIndex;
-		
+
 			b2Log("  var jd: b2FrictionJointDef = new b2FrictionJointDef();\n");
 			b2Log("  jd.bodyA = bodies[%d];\n", indexA);
 			b2Log("  jd.bodyB = bodies[%d];\n", indexB);
@@ -323,6 +321,3 @@ export class b2FrictionJoint extends b2Joint
 		}
 	}
 }
-
-} // module box2d
-

@@ -16,10 +16,12 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Collision/Shapes/b2Shape.ts' />
-///<reference path='../../../../Box2D/Box2D/Collision/Shapes/b2EdgeShape.ts' />
-
-module box2d {
+import {b2DistanceSquaredVV, b2MaxV, b2MinV, b2MulXV, b2Transform, b2Vec2} from '../../Common/b2Math';
+import {b2_polygonRadius, ENABLE_ASSERTS, b2Assert, b2_linearSlop, b2Log, b2_maxPolygonVertices} from '../../Common/b2Settings';
+import {b2Shape, b2ShapeType, b2MassData} from '../../Collision/Shapes/b2Shape';
+import {b2EdgeShape} from '../../Collision/Shapes/b2EdgeShape';
+import {b2DistanceProxy} from '../../Collision/b2Distance';
+import {b2RayCastOutput, b2RayCastInput, b2AABB} from '../../Collision/b2Collision';
 
 /// A chain shape is a free form sequence of line segments.
 /// The chain has two-sided collision, so you can use inside and outside collision.
@@ -270,6 +272,4 @@ export class b2ChainShape extends b2Shape
 		b2Log("    shape.m_hasNextVertex = %s;\n", (this.m_hasNextVertex)?('true'):('false'));
 	}
 }
-
-} // module box2d
 

@@ -16,9 +16,11 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Collision/Shapes/b2Shape.ts' />
-
-module box2d {
+import {b2Vec2, b2DistanceSquaredVV, b2Transform, b2MulXV, b2MinV, b2MaxV, b2SubVV, b2DotVV, b2Sq, b2Sqrt, b2AddVMulSV, b2Asin, b2Pow, b2MulTXV, b2MidVV, b2Min, b2CrossVV, b2MulRV, b2CrossVOne, b2MulSV, b2AddVV, b2MulTRV} from '../../Common/b2Math';
+import {b2_polygonRadius, ENABLE_ASSERTS, b2Assert, b2_linearSlop, b2Log, b2_maxPolygonVertices, b2_epsilon, b2_pi, b2MakeNumberArray, b2_epsilon_sq} from '../../Common/b2Settings';
+import {b2Shape, b2ShapeType, b2MassData} from '../../Collision/Shapes/b2Shape';
+import {b2DistanceProxy} from '../../Collision/b2Distance';
+import {b2RayCastOutput, b2RayCastInput, b2AABB} from '../../Collision/b2Collision';
 
 /// A convex polygon. It is assumed that the interior of the polygon is to
 /// the left of each edge.
@@ -82,7 +84,7 @@ export class b2PolygonShape extends b2Shape
 		{
 			return this.SetAsBox(1, 1);
 		}
-		
+
 		var n = b2Min(count, b2_maxPolygonVertices);
 
 		// Copy vertices into local buffer
@@ -148,7 +150,7 @@ export class b2PolygonShape extends b2Shape
 				break;
 			}
 		}
-		
+
 		this.m_count = m;
 
 		// Copy vertices.
@@ -423,7 +425,7 @@ export class b2PolygonShape extends b2Shape
 
 		// Inertia tensor relative to the local origin (point s).
 		massData.I = density * I;
-		
+
 		// Shift to center of mass then to original body origin.
 		massData.I += massData.mass * (b2DotVV(massData.center, massData.center) - b2DotVV(center, center));
 	}
@@ -524,7 +526,6 @@ export class b2PolygonShape extends b2Shape
 				//Completely dry
 				return 0;
 			}
-			break;
 		case 1:
 			if (intoIndex == (-1))
 			{
@@ -542,10 +543,10 @@ export class b2PolygonShape extends b2Shape
 		var outoLamdda = (0 - depths[outoIndex]) / (depths[outoIndex2] - depths[outoIndex]);
 
 		var intoVec = b2PolygonShape.ComputeSubmergedArea_s_intoVec.SetXY(
-			this.m_vertices[intoIndex].x * (1 - intoLamdda) + this.m_vertices[intoIndex2].x * intoLamdda, 
+			this.m_vertices[intoIndex].x * (1 - intoLamdda) + this.m_vertices[intoIndex2].x * intoLamdda,
 			this.m_vertices[intoIndex].y * (1 - intoLamdda) + this.m_vertices[intoIndex2].y * intoLamdda);
 		var outoVec = b2PolygonShape.ComputeSubmergedArea_s_outoVec.SetXY(
-			this.m_vertices[outoIndex].x * (1 - outoLamdda) + this.m_vertices[outoIndex2].x * outoLamdda, 
+			this.m_vertices[outoIndex].x * (1 - outoLamdda) + this.m_vertices[outoIndex2].x * outoLamdda,
 			this.m_vertices[outoIndex].y * (1 - outoLamdda) + this.m_vertices[outoIndex2].y * outoLamdda);
 
 		// Initialize accumulator
@@ -699,6 +700,3 @@ export class b2PolygonShape extends b2Shape
 	}
 	*/
 }
-
-} // module box2d
-

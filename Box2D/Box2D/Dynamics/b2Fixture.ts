@@ -16,18 +16,13 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/b2Collision.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/Shapes/b2Shape.ts' />
-//<reference path='../../../Box2D/Box2D/Dynamics/Contacts/b2Contact.ts' />
-//<reference path='../../../Box2D/Box2D/Dynamics/b2World.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2CircleShape.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2EdgeShape.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2PolygonShape.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2ChainShape.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2BroadPhase.ts' />
-
-module box2d {
+import {DEBUG, ENABLE_ASSERTS, b2Assert, b2MakeArray, b2Log} from '../Common/b2Settings';
+import {b2BroadPhase} from '../Collision/b2BroadPhase';
+import {b2AABB, b2RayCastOutput, b2RayCastInput} from '../Collision/b2Collision';
+import {b2TreeNode} from '../Collision/b2DynamicTree';
+import {b2Body} from './b2Body';
+import {b2Shape, b2ShapeType, b2MassData} from '../Collision/Shapes/b2Shape';
+import {b2Transform, b2SubVV, b2Vec2} from '../Common/b2Math';
 
 /// This holds contact filtering data.
 export class b2Filter
@@ -338,7 +333,7 @@ export class b2Fixture
 //					b2Log("    shape.m_p.SetXY(%.15f, %.15f);\n", circle.m_p.x, circle.m_p.y);
 //				}
 //				break;
-//		
+//
 //			case b2ShapeType.e_edgeShape:
 //				{
 //					var edge: b2EdgeShape = <b2EdgeShape> this.m_shape;
@@ -352,7 +347,7 @@ export class b2Fixture
 //					b2Log("    shape.m_hasVertex3 = %s;\n", edge.m_hasVertex3);
 //				}
 //				break;
-//		
+//
 //			case b2ShapeType.e_polygonShape:
 //				{
 //					var polygon: b2PolygonShape = <b2PolygonShape> this.m_shape;
@@ -365,7 +360,7 @@ export class b2Fixture
 //					b2Log("    shape.SetAsVector(vs, %d);\n", polygon.m_count);
 //				}
 //				break;
-//		
+//
 //			case b2ShapeType.e_chainShape:
 //				{
 //					var chain: b2ChainShape = <b2ChainShape> this.m_shape;
@@ -382,11 +377,11 @@ export class b2Fixture
 //					b2Log("    shape.m_hasNextVertex = %s;\n", (chain.m_hasNextVertex)?('true'):('false'));
 //				}
 //				break;
-//		
+//
 //			default:
 //				return;
 //			}
-		
+
 			b2Log("\n");
 			b2Log("    fd.shape = shape;\n");
 			b2Log("\n");
@@ -465,7 +460,7 @@ export class b2Fixture
 			broadPhase.DestroyProxy(proxy.proxy);
 			proxy.proxy = null;
 		}
-		
+
 		this.m_proxyCount = 0;
 	}
 
@@ -475,7 +470,7 @@ export class b2Fixture
 	public Synchronize(broadPhase: b2BroadPhase, transform1: b2Transform, transform2: b2Transform): void
 	{
 		if (this.m_proxyCount == 0)
-		{	
+		{
 			return;
 		}
 
@@ -488,15 +483,12 @@ export class b2Fixture
 			var aabb2 = b2Fixture.Synchronize_s_aabb2;
 			this.m_shape.ComputeAABB(aabb1, transform1, i);
 			this.m_shape.ComputeAABB(aabb2, transform2, i);
-		
+
 			proxy.aabb.Combine2(aabb1, aabb2);
-		
+
 			var displacement: b2Vec2 = b2SubVV(transform2.p, transform1.p, b2Fixture.Synchronize_s_displacement);
-		
+
 			broadPhase.MoveProxy(proxy.proxy, proxy.aabb, displacement);
 		}
 	}
 }
-
-} // module box2d
-

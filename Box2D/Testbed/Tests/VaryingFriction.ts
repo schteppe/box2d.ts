@@ -39,4 +39,4 @@ export class VaryingFriction extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

@@ -16,11 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2Abs, b2Vec3, b2Mat33, b2Clamp, b2AddVCrossSV, b2Vec2, b2AddVV, b2CrossVV, b2SubVV, b2Mat22, b2MulRV, b2Rot} from '../../Common/b2Math';
+import {DEBUG, b2Log, b2_maxAngularCorrection, b2_angularSlop, b2_linearSlop} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType, b2LimitState} from '../../Dynamics/Joints/b2Joint';
 
 /// Revolute joint definition. This requires defining an
 /// anchor point where the bodies are joined. The definition
@@ -453,10 +451,10 @@ export class b2RevoluteJoint extends b2Joint
 			var rB: b2Vec2 = b2MulRV(qB, this.m_lalcB, this.m_rB);
 
 			//b2Vec2 C = cB + rB - cA - rA;
-			var C_v2 = 
+			var C_v2 =
 				b2SubVV(
-					b2AddVV(cB, rB, b2Vec2.s_t0), 
-					b2AddVV(cA, rA, b2Vec2.s_t1), 
+					b2AddVV(cB, rB, b2Vec2.s_t0),
+					b2AddVV(cA, rA, b2Vec2.s_t1),
 					b2RevoluteJoint.SolvePositionConstraints_s_C_v2);
 			//positionError = C.Length();
 			positionError = C_v2.GetLength();
@@ -486,7 +484,7 @@ export class b2RevoluteJoint extends b2Joint
 		data.positions[this.m_indexA].a = aA;
 		//data.positions[this.m_indexB].c = cB;
 		data.positions[this.m_indexB].a = aB;
-		
+
 		return positionError <= b2_linearSlop && angularError <= b2_angularSlop;
 	}
 
@@ -594,7 +592,7 @@ export class b2RevoluteJoint extends b2Joint
 
 	public SetLimits(lower, upper)
 	{
-		
+
 		if (lower != this.m_lowerAngle || upper != this.m_upperAngle)
 		{
 			this.m_bodyA.SetAwake(true);
@@ -621,7 +619,7 @@ export class b2RevoluteJoint extends b2Joint
 		{
 			var indexA = this.m_bodyA.m_islandIndex;
 			var indexB = this.m_bodyB.m_islandIndex;
-		
+
 			b2Log("  var jd: b2RevoluteJointDef = new b2RevoluteJointDef();\n");
 			b2Log("  jd.bodyA = bodies[%d];\n", indexA);
 			b2Log("  jd.bodyB = bodies[%d];\n", indexB);
@@ -640,5 +638,5 @@ export class b2RevoluteJoint extends b2Joint
 	}
 }
 
-} // module box2d
+
 

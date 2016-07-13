@@ -16,9 +16,11 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Collision/Shapes/b2Shape.ts' />
-
-module box2d {
+import {b2Vec2, b2DistanceSquaredVV, b2Transform, b2MulXV, b2MinV, b2MaxV, b2SubVV, b2DotVV, b2Sq, b2Sqrt, b2AddVMulSV, b2Asin, b2Pow, b2MulTXV, b2MidVV} from '../../Common/b2Math';
+import {b2_polygonRadius, ENABLE_ASSERTS, b2Assert, b2_linearSlop, b2Log, b2_maxPolygonVertices, b2_epsilon, b2_pi} from '../../Common/b2Settings';
+import {b2Shape, b2ShapeType, b2MassData} from '../../Collision/Shapes/b2Shape';
+import {b2DistanceProxy} from '../../Collision/b2Distance';
+import {b2RayCastOutput, b2RayCastInput, b2AABB} from '../../Collision/b2Collision';
 
 /// A line segment (edge) shape. These can be connected in chains or loops
 /// to other edge shapes. The connectivity information is used to ensure
@@ -197,6 +199,3 @@ export class b2EdgeShape extends b2Shape
 		b2Log("    shape.m_hasVertex3 = %s;\n", this.m_hasVertex3);
 	}
 }
-
-} // module box2d
-

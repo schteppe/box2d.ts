@@ -1,8 +1,8 @@
-///<reference path='../../../Box2D/Box2D/Collision/b2Collision.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/Shapes/b2CircleShape.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/Shapes/b2PolygonShape.ts' />
-
-module box2d {
+import {b2Vec2, b2DistanceSquaredVV, b2Transform, b2MulXV, b2MinV, b2MaxV, b2SubVV, b2DotVV, b2Sq, b2Sqrt, b2AddVMulSV, b2Asin, b2Pow, b2MulTXV, b2MidVV, b2Min, b2CrossVV, b2MulRV, b2CrossVOne, b2MulSV, b2AddVV, b2MulTRV} from '../Common/b2Math';
+import {b2_polygonRadius, ENABLE_ASSERTS, b2Assert, b2_linearSlop, b2Log, b2_maxPolygonVertices, b2_epsilon, b2_pi, b2MakeNumberArray, b2_epsilon_sq, b2_maxFloat} from '../Common/b2Settings';
+import {b2Shape, b2ShapeType, b2MassData} from '../Collision/Shapes/b2Shape';
+import {b2DistanceProxy} from '../Collision/b2Distance';
+import {b2RayCastOutput, b2RayCastInput, b2AABB, b2ManifoldType} from '../Collision/b2Collision';
 
 var b2CollideCircles_s_pA: b2Vec2 = new b2Vec2();
 var b2CollideCircles_s_pB: b2Vec2 = new b2Vec2();
@@ -131,6 +131,3 @@ export function b2CollidePolygonAndCircle(manifold, polygonA, xfA, circleB, xfB)
 		manifold.points[0].id.key = 0;
 	}
 }
-
-} // module box2d
-

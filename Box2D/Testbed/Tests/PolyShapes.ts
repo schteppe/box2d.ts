@@ -39,4 +39,4 @@ export class PolyShapes extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

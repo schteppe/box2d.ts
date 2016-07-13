@@ -16,9 +16,7 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Common/b2Settings.ts' />
 
-module box2d {
 
 /// Timer for profiling. This has platform specific code and may
 /// not work on every platform.
@@ -99,5 +97,5 @@ export class b2Counter
 	}
 }
 
-} // module box2d
+
 

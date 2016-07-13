@@ -1,12 +1,10 @@
-// b2Controller.ts
-module box2d
+import {b2Assert} from '../../../Box2D/Box2D/Common/b2Settings';
+
+export class b2Controller
 {
-	export class b2Controller
+	public type: string = "b2Controller";
+	constructor()
 	{
-		public type: string = "b2Controller";
-		constructor()
-		{
-			b2Assert(true);
-		}
+		b2Assert(true);
 	}
 }

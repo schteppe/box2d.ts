@@ -16,11 +16,8 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Box2D.ts' />
-///<reference path='../../../Box2D/Testbed/Framework/Test.ts' />
-///<reference path='../../../Box2D/Testbed/Framework/Render.ts' />
-
-module box2d.Testbed {
+import {Test} from '../Framework/Test';
+import {b2Body} from '../../../Box2D/Box2D/Dynamics/b2Body';
 
 // This is a fun demo that shows off the wheel joint
 export class Car extends Test
@@ -290,6 +287,3 @@ export class Car extends Test
 		return new Car(canvas, settings);
 	}
 }
-
-} // module box2d.Testbed
-

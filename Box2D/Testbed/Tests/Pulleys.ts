@@ -39,4 +39,4 @@ export class Pulleys extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

@@ -16,11 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2DistanceVV, b2DotVV, b2AddVCrossSV, b2Vec2, b2Abs, b2CrossVV, b2SubVV, b2MulRV, b2MulSV, b2Rot} from '../../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert, DEBUG, b2Log, b2_epsilon, b2_linearSlop} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
 
 export var b2_minPulleyLength: number = 2;
 
@@ -422,7 +420,7 @@ export class b2PulleyJoint extends b2Joint
 		{
 			var indexA = this.m_bodyA.m_islandIndex;
 			var indexB = this.m_bodyB.m_islandIndex;
-		
+
 			b2Log("  var jd: b2PulleyJointDef = new b2PulleyJointDef();\n");
 			b2Log("  jd.bodyA = bodies[%d];\n", indexA);
 			b2Log("  jd.bodyB = bodies[%d];\n", indexB);
@@ -445,5 +443,5 @@ export class b2PulleyJoint extends b2Joint
 	}
 }
 
-} // module box2d
+
 

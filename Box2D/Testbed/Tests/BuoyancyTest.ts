@@ -39,4 +39,4 @@ export class BuoyancyTest extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

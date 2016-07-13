@@ -16,34 +16,28 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Common/b2Settings.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2BlockAllocator.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2StackAllocator.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2ContactManager.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2WorldCallbacks.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Island.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Joints/b2JointFactory.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Joints/b2PulleyJoint.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Contacts/b2Contact.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2Collision.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2BroadPhase.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/Shapes/b2CircleShape.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/Shapes/b2EdgeShape.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/Shapes/b2ChainShape.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/Shapes/b2PolygonShape.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2TimeOfImpact.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Draw.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Timer.ts' />
-
-///<reference path='../../../Contributions/Enhancements/Controllers/b2Controller.ts' />
-
-module box2d {
+import {DEBUG, ENABLE_ASSERTS, b2Assert, b2Log, b2_linearSlop, b2_epsilon, b2_maxSubSteps, b2_maxTOIContacts} from '../Common/b2Settings';
+import {b2Vec2, b2Transform, b2Sweep, b2Min} from '../Common/b2Math';
+import {b2Draw, b2DrawFlags, b2Color} from '../Common/b2Draw';
+import {b2Shape, b2ShapeType} from '../Collision/Shapes/b2Shape';
+import {b2PolygonShape} from '../Collision/Shapes/b2PolygonShape';
+import {b2ChainShape} from '../Collision/Shapes/b2ChainShape';
+import {b2EdgeShape} from '../Collision/Shapes/b2EdgeShape';
+import {b2CircleShape} from '../Collision/Shapes/b2CircleShape';
+import {b2BroadPhase} from '../Collision/b2BroadPhase';
+import {b2AABB, b2RayCastInput, b2RayCastOutput, b2TestOverlapShape} from '../Collision/b2Collision';
+import {b2TOIOutputState, b2TimeOfImpact, b2TOIInput, b2TOIOutput} from '../Collision/b2TimeOfImpact';
+import {b2Fixture, b2FixtureProxy} from './b2Fixture';
+import {b2ContactEdge, b2ContactFlag, b2Contact} from './Contacts/b2Contact';
+import {b2JointType, b2JointEdge, b2Joint, b2JointDef} from './Joints/b2Joint';
+import {b2PulleyJoint} from './Joints/b2PulleyJoint';
+import {b2JointFactory} from './Joints/b2JointFactory';
+import {b2Body, b2BodyDef, b2BodyType, b2BodyFlag} from './b2Body';
+import {b2Island} from './b2Island';
+import {b2Profile,b2TimeStep} from './b2TimeStep';
+import {b2Timer} from '../Common/b2Timer';
+import {b2ContactManager} from './b2ContactManager';
+import {b2ContactListener, b2DestructionListener, b2ContactFilter, b2RayCastCallback, b2QueryCallback} from './b2WorldCallbacks';
 
 export enum b2WorldFlag
 {
@@ -113,7 +107,7 @@ export class b2World
 
 	/// Register a contact filter to provide specific control over collision.
 	/// Otherwise the default filter is used (b2_defaultFilter). The listener is
-	/// owned by you and must remain in scope. 
+	/// owned by you and must remain in scope.
 	public SetContactFilter(filter: b2ContactFilter): void
 	{
 		this.m_contactManager.m_contactFilter = filter;
@@ -605,7 +599,7 @@ export class b2World
 						vs[1].SetXY(aabb.upperBound.x, aabb.lowerBound.y);
 						vs[2].SetXY(aabb.upperBound.x, aabb.upperBound.y);
 						vs[3].SetXY(aabb.lowerBound.x, aabb.upperBound.y);
-		
+
 						this.m_debugDraw.DrawPolygon(vs, 4, color);
 					}
 				}
@@ -1025,10 +1019,10 @@ export class b2World
 			{
 				return;
 			}
-		
+
 			b2Log("var g: b2Vec2 = new b2Vec2(%.15f, %.15f);\n", this.m_gravity.x, this.m_gravity.y);
 			b2Log("this.m_world.SetGravity(g);\n");
-		
+
 			b2Log("var bodies: b2Body[] = new Array(%d);\n", this.m_bodyCount);
 			b2Log("var joints: b2Joint[] = new Array(%d);\n", this.m_jointCount);
 			var i: number = 0;
@@ -1038,14 +1032,14 @@ export class b2World
 				b.Dump();
 				++i;
 			}
-		
+
 			i = 0;
 			for (var j = this.m_jointList; j; j = j.m_next)
 			{
 				j.m_index = i;
 				++i;
 			}
-		
+
 			// First pass on joints, skip gear joints.
 			for (var j = this.m_jointList; j; j = j.m_next)
 			{
@@ -1053,12 +1047,12 @@ export class b2World
 				{
 					continue;
 				}
-		
-				box2d.b2Log("{\n");
+
+				b2Log("{\n");
 				j.Dump();
-				box2d.b2Log("}\n");
+				b2Log("}\n");
 			}
-		
+
 			// Second pass on joints, only gear joints.
 			for (var j = this.m_jointList; j; j = j.m_next)
 			{
@@ -1066,10 +1060,10 @@ export class b2World
 				{
 					continue;
 				}
-		
-				box2d.b2Log("{\n");
+
+				b2Log("{\n");
 				j.Dump();
-				box2d.b2Log("}\n");
+				b2Log("}\n");
 			}
 		}
 	}
@@ -1193,7 +1187,7 @@ export class b2World
 		island.Initialize(this.m_bodyCount,
 						  this.m_contactManager.m_contactCount,
 						  this.m_jointCount,
-						  null, // this.m_stackAllocator, 
+						  null, // this.m_stackAllocator,
 						  this.m_contactManager.m_contactListener);
 
 		// Clear all the island flags.
@@ -1362,16 +1356,16 @@ export class b2World
 				{
 					continue;
 				}
-		
+
 				if (b.GetType() == b2BodyType.b2_staticBody)
 				{
 					continue;
 				}
-		
+
 				// Update fixtures (for broad-phase).
 				b.SynchronizeFixtures();
 			}
-		
+
 			// Look for new contacts.
 			this.m_contactManager.FindNewContacts();
 			this.m_profile.broadphase = timer.GetMilliseconds();
@@ -1651,7 +1645,7 @@ export class b2World
 						{
 							continue;
 						}
-						
+
 						// Add the other body to the island.
 						other.m_flags |= b2BodyFlag.e_islandFlag;
 
@@ -1736,5 +1730,5 @@ export class b2World
 //	}
 }
 
-} // module box2d
+
 

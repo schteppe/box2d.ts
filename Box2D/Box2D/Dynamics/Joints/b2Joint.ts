@@ -16,12 +16,10 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2World.ts' />
-//<reference path='../../../../Box2D/Box2D/Common/b2BlockAllocator.ts' />
-
-module box2d {
+import {b2Vec2} from '../../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert, DEBUG, b2Log} from '../../Common/b2Settings';
+import {b2Body} from '../../Dynamics/b2Body';
+import {b2SolverData} from '../../Dynamics/b2TimeStep';
 
 export enum b2JointType
 {
@@ -243,5 +241,5 @@ export class b2Joint
 	}
 }
 
-} // module box2d
+
 

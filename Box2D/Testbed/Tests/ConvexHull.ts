@@ -39,4 +39,4 @@ export class ConvexHull extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

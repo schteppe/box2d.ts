@@ -39,4 +39,4 @@ export class MotorJoint extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

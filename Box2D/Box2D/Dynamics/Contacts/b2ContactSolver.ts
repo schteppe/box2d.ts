@@ -16,16 +16,32 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../../Box2D/Box2D/Collision/b2Collision.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2Contact.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2World.ts' />
-///<reference path='../../../../Box2D/Box2D/Common/b2StackAllocator.ts' />
-
-module box2d {
+import {ENABLE_ASSERTS, b2Assert, b2MakeArray, b2_maxManifoldPoints, DEBUG, b2_velocityThreshold, b2_toiBaumgarte, b2_linearSlop, b2_maxLinearCorrection, b2_baumgarte} from '../../Common/b2Settings';
+import {
+	b2Vec2,
+	b2Mat22,
+	b2MulXV,
+	b2SubVV,
+	b2MidVV,
+	b2DotVV,
+	b2MulRV,
+	b2Max,
+	b2Transform,
+	b2CrossVV,
+	b2AddVV,
+	b2MulSV,
+	b2AddVCrossSV,
+	b2Clamp,
+	b2CrossVOne,
+	b2MulMV,
+	b2Min
+} from '../../Common/b2Math';
+import {b2Fixture} from '../../Dynamics/b2Fixture';
+import {b2Body} from '../../Dynamics/b2Body';
+import {b2TimeStep, b2Position, b2Velocity} from '../../Dynamics/b2TimeStep';
+import {b2Shape} from '../../Collision/Shapes/b2Shape';
+import {b2Contact} from '../../Dynamics/Contacts/b2Contact';
+import {b2ManifoldType, b2Manifold, b2ManifoldPoint, b2WorldManifold} from '../../Collision/b2Collision';
 
 export class b2VelocityConstraintPoint
 {
@@ -306,7 +322,7 @@ export class b2ContactSolver
 			{
 				cp = manifold.points[j];
 				vcp = vc.points[j];
-		
+
 				if (this.m_step.warmStarting)
 				{
 					vcp.normalImpulse = this.m_step.dtRatio * cp.normalImpulse;
@@ -477,10 +493,10 @@ export class b2ContactSolver
 				vcp.velocityBias = 0;
 				//float32 vRel = b2Dot(vc->normal, vB + b2Cross(wB, vcp->rB) - vA - b2Cross(wA, vcp->rA));
 				vRel = b2DotVV(
-					vc.normal, 
+					vc.normal,
 					b2SubVV(
 						b2AddVCrossSV(vB, wB, vcp.rB, b2Vec2.s_t0),
-						b2AddVCrossSV(vA, wA, vcp.rA, b2Vec2.s_t1), 
+						b2AddVCrossSV(vA, wA, vcp.rA, b2Vec2.s_t1),
 						b2Vec2.s_t0));
 				if (vRel < (-b2_velocityThreshold))
 				{
@@ -578,8 +594,8 @@ export class b2ContactSolver
 				vcp = vc.points[j];
 				//b2Vec2 P = vcp->normalImpulse * normal + vcp->tangentImpulse * tangent;
 				b2AddVV(
-					b2MulSV(vcp.normalImpulse, normal, b2Vec2.s_t0), 
-					b2MulSV(vcp.tangentImpulse, tangent, b2Vec2.s_t1), 
+					b2MulSV(vcp.normalImpulse, normal, b2Vec2.s_t0),
+					b2MulSV(vcp.tangentImpulse, tangent, b2Vec2.s_t1),
 					P);
 				//wA -= iA * b2Cross(vcp->rA, P);
 				wA -= iA * b2CrossVV(vcp.rA, P);
@@ -695,8 +711,8 @@ export class b2ContactSolver
 				// Relative velocity at contact
 				//b2Vec2 dv = vB + b2Cross(wB, vcp->rB) - vA - b2Cross(wA, vcp->rA);
 				b2SubVV(
-					b2AddVCrossSV(vB, wB, vcp.rB, b2Vec2.s_t0), 
-					b2AddVCrossSV(vA, wA, vcp.rA, b2Vec2.s_t1), 
+					b2AddVCrossSV(vB, wB, vcp.rB, b2Vec2.s_t0),
+					b2AddVCrossSV(vA, wA, vcp.rA, b2Vec2.s_t1),
 					dv);
 
 				// Compute tangent force
@@ -733,8 +749,8 @@ export class b2ContactSolver
 				// Relative velocity at contact
 				//b2Vec2 dv = vB + b2Cross(wB, vcp->rB) - vA - b2Cross(wA, vcp->rA);
 				b2SubVV(
-					b2AddVCrossSV(vB, wB, vcp.rB, b2Vec2.s_t0), 
-					b2AddVCrossSV(vA, wA, vcp.rA, b2Vec2.s_t1), 
+					b2AddVCrossSV(vB, wB, vcp.rB, b2Vec2.s_t0),
+					b2AddVCrossSV(vA, wA, vcp.rA, b2Vec2.s_t1),
 					dv);
 
 				// Compute normal impulse
@@ -775,17 +791,17 @@ export class b2ContactSolver
 				// implies that we must have in any solution either vn_i = 0 or x_i = 0. So for the 2D contact problem the cases
 				// vn1 = 0 and vn2 = 0, x1 = 0 and x2 = 0, x1 = 0 and vn2 = 0, x2 = 0 and vn1 = 0 need to be tested. The first valid
 				// solution that satisfies the problem is chosen.
-				// 
+				//
 				// In order to account of the accumulated impulse 'a' (because of the iterative nature of the solver which only requires
 				// that the accumulated impulse is clamped and not the incremental impulse) we change the impulse variable (x_i).
 				//
 				// Substitute:
-				// 
+				//
 				// x = a + d
-				// 
+				//
 				// a := old total impulse
 				// x := new total impulse
-				// d := incremental impulse 
+				// d := incremental impulse
 				//
 				// For the current iteration we extend the formula for the incremental impulse
 				// to compute the new total impulse:
@@ -806,13 +822,13 @@ export class b2ContactSolver
 				// Relative velocity at contact
 				//b2Vec2 dv1 = vB + b2Cross(wB, cp1->rB) - vA - b2Cross(wA, cp1->rA);
 				b2SubVV(
-					b2AddVCrossSV(vB, wB, cp1.rB, b2Vec2.s_t0), 
-					b2AddVCrossSV(vA, wA, cp1.rA, b2Vec2.s_t1), 
+					b2AddVCrossSV(vB, wB, cp1.rB, b2Vec2.s_t0),
+					b2AddVCrossSV(vA, wA, cp1.rA, b2Vec2.s_t1),
 					dv1);
 				//b2Vec2 dv2 = vB + b2Cross(wB, cp2->rB) - vA - b2Cross(wA, cp2->rA);
 				b2SubVV(
-					b2AddVCrossSV(vB, wB, cp2.rB, b2Vec2.s_t0), 
-					b2AddVCrossSV(vA, wA, cp2.rA, b2Vec2.s_t1), 
+					b2AddVCrossSV(vB, wB, cp2.rB, b2Vec2.s_t0),
+					b2AddVCrossSV(vA, wA, cp2.rA, b2Vec2.s_t1),
 					dv2);
 
 				// Compute normal velocity
@@ -829,11 +845,11 @@ export class b2ContactSolver
 				//b -= b2Mul(vc->K, a);
 				b.SelfSub(b2MulMV(vc.K, a, b2Vec2.s_t0));
 
-				/*  
+				/*
 				#if B2_DEBUG_SOLVER == 1
 				var k_errorTol: number = 0.001;
 				#endif
-				*/  
+				*/
 
 				for (;;)
 				{
@@ -895,7 +911,7 @@ export class b2ContactSolver
 					//
 					// Case 2: vn1 = 0 and x2 = 0
 					//
-					//   0 = a11 * x1 + a12 * 0 + b1' 
+					//   0 = a11 * x1 + a12 * 0 + b1'
 					// vn2 = a21 * x1 + a22 * 0 + b2'
 					//
 					x.x = (-cp1.normalMass * b.x);
@@ -947,7 +963,7 @@ export class b2ContactSolver
 					//
 					// Case 3: vn2 = 0 and x1 = 0
 					//
-					// vn1 = a11 * 0 + a12 * x2 + b1' 
+					// vn1 = a11 * 0 + a12 * x2 + b1'
 					//   0 = a21 * 0 + a22 * x2 + b2'
 					//
 					x.x = 0;
@@ -997,7 +1013,7 @@ export class b2ContactSolver
 
 					//
 					// Case 4: x1 = 0 and x2 = 0
-					// 
+					//
 					// vn1 = b1
 					// vn2 = b2;
 					x.x = 0;
@@ -1349,4 +1365,4 @@ export class b2ContactSolver
 	}
 }
 
-} // module box2d
+

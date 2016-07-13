@@ -39,4 +39,4 @@ export class BlobTest extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

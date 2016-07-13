@@ -39,4 +39,4 @@ export class Tiles extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

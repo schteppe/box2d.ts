@@ -16,12 +16,11 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Draw.ts' />
+import {ENABLE_ASSERTS, b2Assert, b2MakeNumberArray, b2_pi} from '../Common/b2Settings';
+import {b2Vec2, b2DistanceVV, b2DotVV, b2Atan2, b2SubVV, b2CrossVV, b2MulSV, b2NegV} from '../Common/b2Math';
+import {b2Draw, b2Color} from '../Common/b2Draw';
 
-module box2d {
-
-/// 
+///
 export class b2RopeDef
 {
 	///
@@ -46,7 +45,7 @@ export class b2RopeDef
 	public k3: number = 0.1;
 }
 
-/// 
+///
 export class b2Rope
 {
 	public m_count: number = 0;
@@ -307,5 +306,5 @@ export class b2Rope
 	}
 }
 
-} // module box2d
+
 

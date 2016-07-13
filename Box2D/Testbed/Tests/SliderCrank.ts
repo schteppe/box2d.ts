@@ -39,4 +39,4 @@ export class SliderCrank extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

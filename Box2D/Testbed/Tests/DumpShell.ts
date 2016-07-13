@@ -39,4 +39,4 @@ export class DumpShell extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

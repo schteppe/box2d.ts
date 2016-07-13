@@ -16,13 +16,16 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2Contact.ts' />
-///<reference path='../../../../Box2D/Box2D/Common/b2BlockAllocator.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-///<reference path='../../../../Box2D/Box2D/Collision/Shapes/b2ChainShape.ts' />
-///<reference path='../../../../Box2D/Box2D/Collision/Shapes/b2EdgeShape.ts' />
-
-module box2d {
+import {b2Transform} from '../../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert} from '../../Common/b2Settings';
+import {b2ShapeType} from '../../Collision/Shapes/b2Shape';
+import {b2ChainShape} from '../../Collision/Shapes/b2ChainShape';
+import {b2PolygonShape} from '../../Collision/Shapes/b2PolygonShape';
+import {b2EdgeShape} from '../../Collision/Shapes/b2EdgeShape';
+import {b2Fixture} from '../../Dynamics/b2Fixture';
+import {b2Contact} from '../../Dynamics/Contacts/b2Contact';
+import {b2CollideEdgeAndPolygon} from '../../Collision/b2CollideEdge';
+import {b2Manifold} from '../../Collision/b2Collision';
 
 export class b2ChainAndPolygonContact extends b2Contact
 {
@@ -58,11 +61,11 @@ export class b2ChainAndPolygonContact extends b2Contact
 		var edge = b2ChainAndPolygonContact.Evaluate_s_edge;
 		chain.GetChildEdge(edge, this.m_indexA);
 		b2CollideEdgeAndPolygon(
-			manifold, 
-			edge, xfA, 
+			manifold,
+			edge, xfA,
 			<b2PolygonShape> shapeB, xfB);
 	}
 }
 
-} // module box2d
+
 

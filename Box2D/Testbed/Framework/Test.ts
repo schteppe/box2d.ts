@@ -1,3 +1,17 @@
+import {b2Vec2, b2Rot, b2DegToRad, b2AddVV, b2SubVV, b2RandomRange, b2MulSV, b2Max, b2AddVMulSV, b2CrossVOne} from '../../Box2D/Common/b2Math';
+import {b2_maxManifoldPoints} from '../../Box2D/Common/b2Settings';
+import {b2Color, b2DrawFlags} from '../../Box2D/Common/b2Draw';
+import {b2DestructionListener, b2ContactListener} from '../../Box2D/Dynamics/b2WorldCallbacks';
+import {b2MouseJoint, b2MouseJointDef} from '../../Box2D/Dynamics/Joints/b2MouseJoint';
+import {bJointDef} from '../../Box2D/Dynamics/Joints/b2Joint';
+import {b2Fixture, b2FixtureDef} from '../../Box2D/Dynamics/b2Fixture';
+import {b2World} from '../../Box2D/Dynamics/b2World';
+import {b2Body, b2BodyDef, b2BodyType} from '../../Box2D/Dynamics/b2Body';
+import {b2Profile} from '../../Box2D/Dynamics/b2TimeStep';
+import {b2AABB, b2PointState, b2GetPointStates, b2WorldManifold} from '../../Box2D/Collision/b2Collision';
+import {b2CircleShape} from '../../Box2D/Collision/Shapes/b2CircleShape';
+import {DebugDraw} from '../../Testbed/Framework/Render';
+
 export var DRAW_STRING_NEW_LINE: number = 25;
 
 export enum KeyCode

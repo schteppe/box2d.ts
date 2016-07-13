@@ -39,4 +39,4 @@ export class EdgeShapes extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

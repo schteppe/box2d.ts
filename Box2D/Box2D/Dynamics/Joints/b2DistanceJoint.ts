@@ -16,11 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2AddVCrossSV, b2DotVV, b2MulRV, b2Clamp, b2MulSV, b2Abs, b2Rot, b2Vec2, b2CrossVV, b2DistanceVV, b2SubVV} from '../../Common/b2Math';
+import {DEBUG, b2Log, b2_maxLinearCorrection, b2_linearSlop, b2_pi} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
 
 /// Distance joint definition. This requires defining an
 /// anchor point on both bodies and the non-zero length of the
@@ -168,7 +166,7 @@ export class b2DistanceJoint extends b2Joint
 		{
 			var indexA = this.m_bodyA.m_islandIndex;
 			var indexB = this.m_bodyB.m_islandIndex;
-		
+
 			b2Log("  var jd: b2DistanceJointDef = new b2DistanceJointDef();\n");
 			b2Log("  jd.bodyA = bodies[%d];\n", indexA);
 			b2Log("  jd.bodyB = bodies[%d];\n", indexB);
@@ -386,5 +384,5 @@ export class b2DistanceJoint extends b2Joint
 	}
 }
 
-} // module box2d
+
 

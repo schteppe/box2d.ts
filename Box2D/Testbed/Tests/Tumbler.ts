@@ -39,4 +39,4 @@ export class Tumbler extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

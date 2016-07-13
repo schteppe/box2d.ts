@@ -16,9 +16,12 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Collision/Shapes/b2Shape.ts' />
-
-module box2d {
+import {b2Vec2, b2DistanceSquaredVV, b2Transform, b2MulXV, b2MinV, b2MaxV, b2SubVV, b2DotVV, b2Sq, b2Sqrt, b2AddVMulSV, b2Asin, b2Pow} from '../../Common/b2Math';
+import {b2_polygonRadius, ENABLE_ASSERTS, b2Assert, b2_linearSlop, b2Log, b2_maxPolygonVertices, b2_epsilon, b2_pi} from '../../Common/b2Settings';
+import {b2Shape, b2ShapeType, b2MassData} from '../../Collision/Shapes/b2Shape';
+import {b2EdgeShape} from '../../Collision/Shapes/b2EdgeShape';
+import {b2DistanceProxy} from '../../Collision/b2Distance';
+import {b2RayCastOutput, b2RayCastInput, b2AABB} from '../../Collision/b2Collision';
 
 /// A circle shape.
 export class b2CircleShape extends b2Shape
@@ -167,6 +170,3 @@ export class b2CircleShape extends b2Shape
 		b2Log("    shape.m_p.SetXY(%.15f, %.15f);\n", this.m_p.x, this.m_p.y);
 	}
 }
-
-} // module box2d
-

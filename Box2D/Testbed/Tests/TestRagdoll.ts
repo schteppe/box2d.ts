@@ -39,4 +39,4 @@ export class TestRagdoll extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

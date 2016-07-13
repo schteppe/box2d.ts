@@ -39,4 +39,4 @@ export class TimeOfImpact extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

@@ -16,14 +16,14 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Collision/b2BroadPhase.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2WorldCallbacks.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Contacts/b2Contact.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Contacts/b2ContactFactory.ts' />
-
-module box2d {
+import {ENABLE_ASSERTS, b2Assert} from '../Common/b2Settings';
+import {b2BroadPhase} from '../Collision/b2BroadPhase';
+import {b2Fixture, b2FixtureProxy} from './b2Fixture';
+import {b2Body, b2BodyType} from './b2Body';
+import {b2Contact, b2ContactEdge, b2ContactFlag} from './Contacts/b2Contact';
+import {b2ContactFactory} from './Contacts/b2ContactFactory';
+import {b2ContactFilter, b2ContactListener} from './b2WorldCallbacks';
+import {b2TreeNode} from '../Collision/b2DynamicTree';
 
 // Delegate of b2World.
 export class b2ContactManager
@@ -33,7 +33,7 @@ export class b2ContactManager
 	public m_contactCount: number = 0;
 	public m_contactFilter: b2ContactFilter = b2ContactFilter.b2_defaultFilter;
 	public m_contactListener: b2ContactListener = b2ContactListener.b2_defaultListener;
-	public m_allocator: any = null; 
+	public m_allocator: any = null;
 
 	public m_contactFactory: b2ContactFactory = null;
 
@@ -307,5 +307,5 @@ export class b2ContactManager
 	}
 }
 
-} // module box2d
+
 

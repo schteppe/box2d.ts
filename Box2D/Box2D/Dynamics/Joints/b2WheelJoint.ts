@@ -16,11 +16,10 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2CrossOneV, b2DotVV, b2Clamp, b2Abs, b2Vec2, b2AddVV, b2CrossVV, b2SubVV, b2MulRV, b2MulSV, b2Rot} from '../../Common/b2Math';
+import {b2_linearSlop, ENABLE_ASSERTS, b2Assert, DEBUG, b2Log, b2_pi} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
+import {b2Body} from '../../Dynamics/b2Body';
 
 /// Wheel joint definition. This requires defining a line of
 /// motion using an axis and an anchor point. The definition uses local
@@ -198,8 +197,8 @@ export class b2WheelJoint extends b2Joint
 		var rB: b2Vec2 = b2MulRV(qB, this.m_lalcB, this.m_rB);
 		//b2Vec2 d = cB + rB - cA - rA;
 		var d: b2Vec2 = b2SubVV(
-			b2AddVV(cB, rB, b2Vec2.s_t0), 
-			b2AddVV(cA, rA, b2Vec2.s_t1), 
+			b2AddVV(cB, rB, b2Vec2.s_t0),
+			b2AddVV(cA, rA, b2Vec2.s_t1),
 			b2WheelJoint.InitVelocityConstraints_s_d);
 
 		// Point to line constraint
@@ -295,8 +294,8 @@ export class b2WheelJoint extends b2Joint
 
 			//b2Vec2 P = m_impulse * m_ay + m_springImpulse * m_ax;
 			var P: b2Vec2 = b2AddVV(
-				b2MulSV(this.m_impulse, this.m_ay, b2Vec2.s_t0), 
-				b2MulSV(this.m_springImpulse, this.m_ax, b2Vec2.s_t1), 
+				b2MulSV(this.m_impulse, this.m_ay, b2Vec2.s_t0),
+				b2MulSV(this.m_springImpulse, this.m_ax, b2Vec2.s_t1),
 				b2WheelJoint.InitVelocityConstraints_s_P);
 			//float32 LA = m_impulse * m_sAy + m_springImpulse * m_sAx + m_motorImpulse;
 			var LA: number = this.m_impulse * this.m_sAy + this.m_springImpulse * this.m_sAx + this.m_motorImpulse;
@@ -417,8 +416,8 @@ export class b2WheelJoint extends b2Joint
 		var rB: b2Vec2 = b2MulRV(qB, this.m_lalcB, this.m_rB);
 		//b2Vec2 d = (cB - cA) + rB - rA;
 		var d: b2Vec2 = b2AddVV(
-			b2SubVV(cB, cA, b2Vec2.s_t0), 
-			b2SubVV(rB, rA, b2Vec2.s_t1), 
+			b2SubVV(cB, cA, b2Vec2.s_t0),
+			b2SubVV(rB, rA, b2Vec2.s_t1),
 			b2WheelJoint.SolvePositionConstraints_s_d);
 
 		//b2Vec2 ay = b2Mul(qA, m_localYAxisA);
@@ -557,7 +556,7 @@ export class b2WheelJoint extends b2Joint
 		{
 			var indexA = this.m_bodyA.m_islandIndex;
 			var indexB = this.m_bodyB.m_islandIndex;
-		
+
 			b2Log("  var jd: b2WheelJointDef = new b2WheelJointDef();\n");
 			b2Log("  jd.bodyA = bodies[%d];\n", indexA);
 			b2Log("  jd.bodyB = bodies[%d];\n", indexB);
@@ -575,5 +574,5 @@ export class b2WheelJoint extends b2Joint
 	}
 }
 
-} // module box2d
+
 

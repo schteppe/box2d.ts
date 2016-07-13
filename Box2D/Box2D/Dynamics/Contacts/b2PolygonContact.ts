@@ -16,15 +16,13 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2Contact.ts' />
-///<reference path='../../../../Box2D/Box2D/Common/b2BlockAllocator.ts' />
-//<reference path='../../../../Box2D/Box2D/Collision/b2TimeOfImpact.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2WorldCallbacks.ts' />
-///<reference path='../../../../Box2D/Box2D/Collision/b2CollidePolygon.ts' />
-
-module box2d {
+import {b2Transform} from '../../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert} from '../../Common/b2Settings';
+import {b2PolygonShape} from '../../Collision/Shapes/b2PolygonShape';
+import {b2Fixture} from '../../Dynamics/b2Fixture';
+import {b2Contact} from '../../Dynamics/Contacts/b2Contact';
+import {b2CollidePolygons} from '../../Collision/b2CollidePolygon';
+import {b2Manifold} from '../../Collision/b2Collision';
 
 export class b2PolygonContact extends b2Contact
 {
@@ -54,11 +52,11 @@ export class b2PolygonContact extends b2Contact
 		if (ENABLE_ASSERTS) { b2Assert(shapeA instanceof b2PolygonShape); }
 		if (ENABLE_ASSERTS) { b2Assert(shapeB instanceof b2PolygonShape); }
 		b2CollidePolygons(
-			manifold, 
-			<b2PolygonShape> shapeA, xfA, 
+			manifold,
+			<b2PolygonShape> shapeA, xfA,
 			<b2PolygonShape> shapeB, xfB);
 	}
 }
 
-} // module box2d
+
 

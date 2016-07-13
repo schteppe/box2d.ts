@@ -1,7 +1,6 @@
-///<reference path='../../../Box2D/Box2D/Collision/b2Collision.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/Shapes/b2PolygonShape.ts' />
-
-module box2d {
+import {b2Vec2, b2MulXV, b2SubVV, b2DotVV, b2MulTXV, b2MidVV, b2MulRV, b2CrossVOne, b2MulTRV, b2NegV} from '../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert, b2MakeNumberArray, b2_maxFloat, b2_maxManifoldPoints} from '../Common/b2Settings';
+import {b2ManifoldType, b2ContactFeatureType, b2ClipSegmentToLine, b2ClipVertex, b2ContactFeature} from '../Collision/b2Collision';
 
 var b2EdgeSeparation_s_normal1World: b2Vec2 = new b2Vec2();
 var b2EdgeSeparation_s_normal1: b2Vec2 = new b2Vec2();
@@ -311,6 +310,3 @@ export function b2CollidePolygons(manifold, polyA, xfA, polyB, xfB)
 
 	manifold.pointCount = pointCount;
 }
-
-} // module box2d
-

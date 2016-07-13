@@ -1,22 +1,17 @@
-//<reference path='../../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2DistanceJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2WheelJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2MouseJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2RevoluteJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2PrismaticJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2PulleyJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2GearJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2WeldJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2FrictionJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2RopeJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2MotorJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2AreaJoint.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2World.ts' />
-//<reference path='../../../../Box2D/Box2D/Common/b2BlockAllocator.ts' />
-
-module box2d {
+import {ENABLE_ASSERTS, b2Assert} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
+import {b2DistanceJoint, b2DistanceJointDef} from '../../Dynamics/Joints/b2DistanceJoint';
+import {b2MouseJoint, b2MouseJointDef} from '../../Dynamics/Joints/b2MouseJoint';
+import {b2PrismaticJoint, b2PrismaticJointDef} from '../../Dynamics/Joints/b2PrismaticJoint';
+import {b2RevoluteJoint, b2RevoluteJointDef} from '../../Dynamics/Joints/b2RevoluteJoint';
+import {b2PulleyJoint, b2PulleyJointDef} from '../../Dynamics/Joints/b2PulleyJoint';
+import {b2GearJoint, b2GearJointDef} from '../../Dynamics/Joints/b2GearJoint';
+import {b2WheelJoint, b2WheelJointDef} from '../../Dynamics/Joints/b2WheelJoint';
+import {b2WeldJoint, b2WeldJointDef} from '../../Dynamics/Joints/b2WeldJoint';
+import {b2FrictionJoint, b2FrictionJointDef} from '../../Dynamics/Joints/b2FrictionJoint';
+import {b2RopeJoint, b2RopeJointDef} from '../../Dynamics/Joints/b2RopeJoint';
+import {b2MotorJoint, b2MotorJointDef} from '../../Dynamics/Joints/b2MotorJoint';
+import {b2AreaJoint, b2AreaJointDef} from '../../Dynamics/Joints/b2AreaJoint';
 
 export class b2JointFactory
 {
@@ -31,7 +26,7 @@ export class b2JointFactory
 			break;
 
 		case b2JointType.e_mouseJoint:
-			joint = new b2MouseJoint(<b2MouseJointDef> def);
+			joint = new b2MouseJoint(<b2MouseJointDef>def);
 			break;
 
 		case b2JointType.e_prismaticJoint:
@@ -73,7 +68,7 @@ export class b2JointFactory
 		case b2JointType.e_areaJoint:
 			joint = new b2AreaJoint(<b2AreaJointDef> def);
 			break;
- 
+
 		default:
 			if (ENABLE_ASSERTS) { b2Assert(false); }
 			break;
@@ -87,5 +82,5 @@ export class b2JointFactory
 	}
 }
 
-} // module box2d
+
 

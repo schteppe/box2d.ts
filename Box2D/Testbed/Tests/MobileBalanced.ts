@@ -39,4 +39,4 @@ export class MobileBalanced extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

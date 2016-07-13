@@ -39,4 +39,4 @@ export class PolyCollision extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

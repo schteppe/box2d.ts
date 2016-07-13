@@ -16,11 +16,10 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2DotVV, b2Abs, b2Clamp, b2Max, b2Min, b2CrossSV, b2Mat33, b2Vec3, b2CrossOneV, b2AddVCrossSV, b2Vec2, b2AddVV, b2CrossVV, b2SubVV, b2Mat22, b2MulRV, b2MulSV, b2Rot} from '../../Common/b2Math';
+import {DEBUG, b2Log, b2_linearSlop, b2_maxLinearCorrection, b2_angularSlop} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType, b2LimitState} from '../../Dynamics/Joints/b2Joint';
+import {b2Body} from '../../Dynamics/b2Body';
 
 /// Prismatic joint definition. This requires defining a line of
 /// motion using an axis and an anchor point. The definition uses local
@@ -292,8 +291,8 @@ export class b2PrismaticJoint extends b2Joint
 
 			//b2Vec2 P = m_impulse.x * m_perp + (m_motorImpulse + m_impulse.z) * m_axis;
 			var P: b2Vec2 = b2AddVV(
-				b2MulSV(this.m_impulse.x, this.m_perp, b2Vec2.s_t0), 
-				b2MulSV((this.m_motorImpulse + this.m_impulse.z), this.m_axis, b2Vec2.s_t1), 
+				b2MulSV(this.m_impulse.x, this.m_perp, b2Vec2.s_t0),
+				b2MulSV((this.m_motorImpulse + this.m_impulse.z), this.m_axis, b2Vec2.s_t1),
 				b2PrismaticJoint.InitVelocityConstraints_s_P);
 			//float32 LA = m_impulse.x * m_s1 + m_impulse.y + (m_motorImpulse + m_impulse.z) * m_a1;
 			var LA = this.m_impulse.x * this.m_s1 + this.m_impulse.y + (this.m_motorImpulse + this.m_impulse.z) * this.m_a1;
@@ -468,7 +467,7 @@ export class b2PrismaticJoint extends b2Joint
 		var aB: number = data.positions[this.m_indexB].a;
 
 		var qA: b2Rot = this.m_qA.SetAngleRadians(aA), qB: b2Rot = this.m_qB.SetAngleRadians(aB);
-		
+
 		var mA: number = this.m_invMassA, mB: number = this.m_invMassB;
 		var iA: number = this.m_invIA, iB: number = this.m_invIB;
 
@@ -602,8 +601,8 @@ export class b2PrismaticJoint extends b2Joint
 
 		//b2Vec2 P = impulse.x * perp + impulse.z * axis;
 		var P: b2Vec2 = b2AddVV(
-			b2MulSV(impulse.x, perp, b2Vec2.s_t0), 
-			b2MulSV(impulse.z, axis, b2Vec2.s_t1), 
+			b2MulSV(impulse.x, perp, b2Vec2.s_t0),
+			b2MulSV(impulse.z, axis, b2Vec2.s_t1),
 			b2PrismaticJoint.SolvePositionConstraints_s_P);
 		//float32 LA = impulse.x * s1 + impulse.y + impulse.z * a1;
 		var LA = impulse.x * s1 + impulse.y + impulse.z * a1;
@@ -700,13 +699,13 @@ export class b2PrismaticJoint extends b2Joint
 		var wB = bB.m_angularVelocity;
 
 		//float32 speed = b2Dot(d, b2Cross(wA, axis)) + b2Dot(axis, vB + b2Cross(wB, rB) - vA - b2Cross(wA, rA));
-		var speed = 
-			b2DotVV(d, b2CrossSV(wA, axis, b2Vec2.s_t0)) + 
+		var speed =
+			b2DotVV(d, b2CrossSV(wA, axis, b2Vec2.s_t0)) +
 			b2DotVV(
-				axis, 
+				axis,
 				b2SubVV(
 					b2AddVCrossSV(vB, wB, rB, b2Vec2.s_t0),
-					b2AddVCrossSV(vA, wA, rA, b2Vec2.s_t1), 
+					b2AddVCrossSV(vA, wA, rA, b2Vec2.s_t1),
 					b2Vec2.s_t0));
 		return speed;
 	}
@@ -793,7 +792,7 @@ export class b2PrismaticJoint extends b2Joint
 		{
 			var indexA = this.m_bodyA.m_islandIndex;
 			var indexB = this.m_bodyB.m_islandIndex;
-		
+
 			b2Log("  var jd: b2PrismaticJointDef = new b2PrismaticJointDef();\n");
 			b2Log("  jd.bodyA = bodies[%d];\n", indexA);
 			b2Log("  jd.bodyB = bodies[%d];\n", indexB);
@@ -813,5 +812,5 @@ export class b2PrismaticJoint extends b2Joint
 	}
 }
 
-} // module box2d
+
 

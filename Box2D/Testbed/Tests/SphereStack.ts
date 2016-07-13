@@ -16,10 +16,8 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Box2D.ts' />
-///<reference path='../../../Box2D/Testbed/Framework/Render.ts' />
-
-module box2d.Testbed {
+import {Test} from '../Framework/Test';
+import {b2Body} from '../../../Box2D/Box2D/Dynamics/b2Body';
 
 export class SphereStack extends Test
 {
@@ -83,6 +81,3 @@ export class SphereStack extends Test
 		return new SphereStack(canvas, settings);
 	}
 }
-
-} // module box2d.Testbed
-

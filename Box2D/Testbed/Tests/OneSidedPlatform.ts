@@ -39,4 +39,4 @@ export class OneSidedPlatform extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

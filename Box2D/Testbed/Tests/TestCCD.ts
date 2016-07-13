@@ -39,4 +39,4 @@ export class TestCCD extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

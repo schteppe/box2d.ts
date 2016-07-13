@@ -16,18 +16,13 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Common/b2Settings.ts' />
-///<reference path='../../../../Box2D/Box2D/Common/b2Math.ts' />
-//<reference path='../../../../Box2D/Box2D/Collision/b2Collision.ts' />
-//<reference path='../../../../Box2D/Box2D/Collision/Shapes/b2Shape.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.ts' />
-///<reference path='../../../../Box2D/Box2D/Collision/b2TimeOfImpact.ts' />
-//<reference path='../../../../Box2D/Box2D/Common/b2BlockAllocator.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2World.ts' />
-
-module box2d {
+import {b2Transform, b2Sqrt, b2Sweep} from '../../Common/b2Math';
+import {b2_linearSlop} from '../../Common/b2Settings';
+import {b2Fixture} from '../../Dynamics/b2Fixture';
+import {b2ContactListener} from '../../Dynamics/b2WorldCallbacks';
+import {b2Manifold, b2WorldManifold, b2TestOverlapShape} from '../../Collision/b2Collision';
+import {b2TimeOfImpact, b2TOIInput, b2TOIOutput} from '../../Collision/b2TimeOfImpact';
+import {b2Body} from '../../Dynamics/b2Body';
 
 /// Friction mixing law. The idea is to allow either fixture to drive the restitution to zero.
 /// For example, anything slides on ice.
@@ -258,7 +253,7 @@ export class b2Contact
 		if (sensor)
 		{
 			//if (aabbOverlap)
-			//{ 
+			//{
 				var shapeA = this.m_fixtureA.GetShape();
 				var shapeB = this.m_fixtureB.GetShape();
 				touching = b2TestOverlapShape(shapeA, this.m_indexA, shapeB, this.m_indexB, xfA, xfB);
@@ -270,7 +265,7 @@ export class b2Contact
 		else
 		{
 			//if (aabbOverlap)
-			//{ 
+			//{
 				this.Evaluate(this.m_manifold, xfA, xfB);
 				touching = this.m_manifold.pointCount > 0;
 
@@ -352,5 +347,5 @@ export class b2Contact
 	}
 }
 
-} // module box2d
+
 

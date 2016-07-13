@@ -16,9 +16,7 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-
-module box2d {
+import {b2Vec2, b2Clamp, b2Transform} from '../Common/b2Math';
 
 /// Color for debug drawing. Each value has the range [0,1].
 export class b2Color
@@ -33,16 +31,16 @@ export class b2Color
 
 	constructor(rr: number, gg: number, bb: number)
 	{
-		this._r = box2d.b2Clamp(Math.round(rr*255), 0, 255);
-		this._g = box2d.b2Clamp(Math.round(gg*255), 0, 255);
-		this._b = box2d.b2Clamp(Math.round(bb*255), 0, 255);
+		this._r = b2Clamp(Math.round(rr*255), 0, 255);
+		this._g = b2Clamp(Math.round(gg*255), 0, 255);
+		this._b = b2Clamp(Math.round(bb*255), 0, 255);
 	}
 
 	public SetRGB(rr: number, gg: number, bb: number): b2Color
 	{
-		this._r = box2d.b2Clamp(Math.round(rr*255), 0, 255);
-		this._g = box2d.b2Clamp(Math.round(gg*255), 0, 255);
-		this._b = box2d.b2Clamp(Math.round(bb*255), 0, 255);
+		this._r = b2Clamp(Math.round(rr*255), 0, 255);
+		this._g = b2Clamp(Math.round(gg*255), 0, 255);
+		this._b = b2Clamp(Math.round(bb*255), 0, 255);
 		return this;
 	}
 
@@ -135,5 +133,5 @@ export class b2Draw
 	}
 }
 
-} // module box2d
+
 

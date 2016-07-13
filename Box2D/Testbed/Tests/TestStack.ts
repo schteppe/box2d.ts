@@ -39,4 +39,4 @@ export class TestStack extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

@@ -39,4 +39,4 @@ export class Breakable extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

@@ -16,21 +16,15 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Settings.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2Distance.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2World.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Contacts/b2Contact.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2StackAllocator.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Timer.ts' />
-
-module box2d {
+import {DEBUG, ENABLE_ASSERTS, b2Assert, b2_maxTranslation, b2_maxRotationSquared, b2_maxRotation, b2_timeToSleep, b2_angularSleepTolerance, b2_linearSleepTolerance, b2_maxTranslationSquared, b2_maxFloat} from '../Common/b2Settings';
+import {b2Body, b2BodyType, b2BodyFlag} from './b2Body';
+import {b2Position, b2Velocity, b2SolverData} from './b2TimeStep';
+import {b2Joint} from './Joints/b2Joint';
+import {b2Contact} from './Contacts/b2Contact';
+import {b2ContactSolver, b2ContactSolverDef, b2ContactVelocityConstraint} from './Contacts/b2ContactSolver';
+import {b2Min, b2Clamp, b2MulSV, b2DotVV, b2Abs, b2Max, b2Vec2} from '../Common/b2Math';
+import {b2Timer} from '../Common/b2Timer';
+import {b2ContactListener, b2ContactImpulse} from './b2WorldCallbacks';
 
 /*
 Position Correction Notes
@@ -287,7 +281,7 @@ export class b2Island
 				v.x += h * (b.m_gravityScale * gravity.x + b.m_invMass * b.m_force.x);
 				v.y += h * (b.m_gravityScale * gravity.y + b.m_invMass * b.m_force.y);
 				w += h * b.m_invI * b.m_torque;
-		
+
 				// Apply damping.
 				// ODE: dv/dt + c * v = 0
 				// Solution: v(t) = v0 * exp(-c * t)
@@ -439,8 +433,8 @@ export class b2Island
 					continue;
 				}
 
-				if ((b.m_flags & b2BodyFlag.e_autoSleepFlag) == 0 || 
-					b.m_angularVelocity * b.m_angularVelocity > angTolSqr || 
+				if ((b.m_flags & b2BodyFlag.e_autoSleepFlag) == 0 ||
+					b.m_angularVelocity * b.m_angularVelocity > angTolSqr ||
 					b2DotVV(b.m_linearVelocity, b.m_linearVelocity) > linTolSqr)
 				{
 					b.m_sleepTime = 0;
@@ -627,5 +621,5 @@ export class b2Island
 	}
 }
 
-} // module box2d
+
 

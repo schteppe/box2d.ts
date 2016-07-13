@@ -39,4 +39,4 @@ export class CompoundShapes extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

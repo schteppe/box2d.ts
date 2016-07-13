@@ -16,13 +16,12 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2RevoluteJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2PrismaticJoint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2MulTRV, b2MulRV, b2Transform, b2MulSV, b2DotVV, b2IsValid, b2Rot, b2Vec2, b2AddVV, b2CrossVV, b2SubVV} from '../../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert, DEBUG, b2Log, b2_linearSlop} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
+import {b2RevoluteJoint} from '../../Dynamics/Joints/b2RevoluteJoint';
+import {b2PrismaticJoint} from '../../Dynamics/Joints/b2PrismaticJoint';
+import {b2Body} from '../../Dynamics/b2Body';
 
 /// Gear joint definition. This definition requires two existing
 /// revolute or prismatic joints (any combination will work).
@@ -154,7 +153,7 @@ export class b2GearJoint extends b2Joint
 			var pA: b2Vec2 = b2MulTRV(
 				xfC.q,
 				b2AddVV(
-					b2MulRV(xfA.q, this.m_localAnchorA, b2Vec2.s_t0), 
+					b2MulRV(xfA.q, this.m_localAnchorA, b2Vec2.s_t0),
 					b2SubVV(xfA.p, xfC.p, b2Vec2.s_t1),
 					b2Vec2.s_t0),
 				b2Vec2.s_t0); // pA uses s_t0
@@ -195,7 +194,7 @@ export class b2GearJoint extends b2Joint
 			var pB: b2Vec2 = b2MulTRV(
 				xfD.q,
 				b2AddVV(
-					b2MulRV(xfB.q, this.m_localAnchorB, b2Vec2.s_t0), 
+					b2MulRV(xfB.q, this.m_localAnchorB, b2Vec2.s_t0),
 					b2SubVV(xfB.p, xfD.p, b2Vec2.s_t1),
 					b2Vec2.s_t0),
 				b2Vec2.s_t0); // pB uses s_t0
@@ -251,9 +250,9 @@ export class b2GearJoint extends b2Joint
 		var wD: number = data.velocities[this.m_indexD].w;
 
 		//b2Rot qA(aA), qB(aB), qC(aC), qD(aD);
-		var qA: b2Rot = this.m_qA.SetAngleRadians(aA), 
-			qB: b2Rot = this.m_qB.SetAngleRadians(aB), 
-			qC: b2Rot = this.m_qC.SetAngleRadians(aC), 
+		var qA: b2Rot = this.m_qA.SetAngleRadians(aA),
+			qB: b2Rot = this.m_qB.SetAngleRadians(aB),
+			qC: b2Rot = this.m_qC.SetAngleRadians(aC),
 			qD: b2Rot = this.m_qD.SetAngleRadians(aD);
 
 		this.m_mass = 0;
@@ -355,8 +354,8 @@ export class b2GearJoint extends b2Joint
 		var wD: number = data.velocities[this.m_indexD].w;
 
 		//float32 Cdot = b2Dot(m_JvAC, vA - vC) + b2Dot(m_JvBD, vB - vD);
-		var Cdot = 
-			b2DotVV(this.m_JvAC, b2SubVV(vA, vC, b2Vec2.s_t0)) + 
+		var Cdot =
+			b2DotVV(this.m_JvAC, b2SubVV(vA, vC, b2Vec2.s_t0)) +
 			b2DotVV(this.m_JvBD, b2SubVV(vB, vD, b2Vec2.s_t0));
 		Cdot += (this.m_JwA * wA - this.m_JwC * wC) + (this.m_JwB * wB - this.m_JwD * wD);
 
@@ -403,9 +402,9 @@ export class b2GearJoint extends b2Joint
 		var aD: number = data.positions[this.m_indexD].a;
 
 		//b2Rot qA(aA), qB(aB), qC(aC), qD(aD);
-		var qA: b2Rot = this.m_qA.SetAngleRadians(aA), 
-			qB: b2Rot = this.m_qB.SetAngleRadians(aB), 
-			qC: b2Rot = this.m_qC.SetAngleRadians(aC), 
+		var qA: b2Rot = this.m_qA.SetAngleRadians(aA),
+			qB: b2Rot = this.m_qB.SetAngleRadians(aB),
+			qC: b2Rot = this.m_qC.SetAngleRadians(aC),
 			qD: b2Rot = this.m_qD.SetAngleRadians(aD);
 
 		var linearError: number = 0;
@@ -447,8 +446,8 @@ export class b2GearJoint extends b2Joint
 			var pA: b2Vec2 = b2MulTRV(
 				qC,
 				b2AddVV(
-					rA, 
-					b2SubVV(cA, cC, b2Vec2.s_t0), 
+					rA,
+					b2SubVV(cA, cC, b2Vec2.s_t0),
 					b2Vec2.s_t0),
 				b2Vec2.s_t0); // pA uses s_t0
 			//coordinateA = b2Dot(pA - pC, m_localAxisC);
@@ -486,8 +485,8 @@ export class b2GearJoint extends b2Joint
 			var pB: b2Vec2 = b2MulTRV(
 				qD,
 				b2AddVV(
-					rB, 
-					b2SubVV(cB, cD, b2Vec2.s_t0), 
+					rB,
+					b2SubVV(cB, cD, b2Vec2.s_t0),
 					b2Vec2.s_t0),
 				b2Vec2.s_t0); // pB uses s_t0
 			//coordinateB = b2Dot(pB - pD, m_localAxisD);
@@ -573,10 +572,10 @@ export class b2GearJoint extends b2Joint
 		{
 			var indexA = this.m_bodyA.m_islandIndex;
 			var indexB = this.m_bodyB.m_islandIndex;
-		
+
 			var index1 = this.m_joint1.m_index;
 			var index2 = this.m_joint2.m_index;
-		
+
 			b2Log("  var jd: b2GearJointDef = new b2GearJointDef();\n");
 			b2Log("  jd.bodyA = bodies[%d];\n", indexA);
 			b2Log("  jd.bodyB = bodies[%d];\n", indexB);
@@ -589,5 +588,5 @@ export class b2GearJoint extends b2Joint
 	}
 }
 
-} // module box2d
+
 

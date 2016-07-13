@@ -16,11 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2MulTXV, b2AddVCrossSV, b2Vec2, b2AddVV, b2CrossVV, b2SubVV, b2IsValid, b2Mat22, b2MulMV, b2MulRV, b2MulSV, b2Rot} from '../../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert, DEBUG, b2Log, b2_epsilon, b2_pi} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
 
 /// Mouse joint definition. This requires a world target point,
 /// tuning parameters, and the time step.
@@ -236,11 +234,11 @@ export class b2MouseJoint extends b2Joint
 		var Cdot: b2Vec2 = b2AddVCrossSV(vB, wB, this.m_rB, b2MouseJoint.SolveVelocityConstraints_s_Cdot);
 		//b2Vec2 impulse = b2Mul(m_mass, -(Cdot + m_C + m_gamma * m_impulse));
 		var impulse: b2Vec2 = b2MulMV(
-			this.m_mass, 
+			this.m_mass,
 			b2AddVV(
-				Cdot, 
-				b2AddVV(this.m_C, 
-					b2MulSV(this.m_gamma, this.m_impulse, b2Vec2.s_t0), 
+				Cdot,
+				b2AddVV(this.m_C,
+					b2MulSV(this.m_gamma, this.m_impulse, b2Vec2.s_t0),
 					b2Vec2.s_t0),
 				b2Vec2.s_t0).SelfNeg(),
 			b2MouseJoint.SolveVelocityConstraints_s_impulse);
@@ -304,5 +302,5 @@ export class b2MouseJoint extends b2Joint
 	}
 }
 
-} // module box2d
+
 

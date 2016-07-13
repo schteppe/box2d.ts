@@ -39,4 +39,4 @@ export class AddPair extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

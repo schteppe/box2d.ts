@@ -39,4 +39,4 @@ export class CollisionProcessing extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

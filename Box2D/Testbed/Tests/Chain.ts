@@ -39,4 +39,4 @@ export class Chain extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

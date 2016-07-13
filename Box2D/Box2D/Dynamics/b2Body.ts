@@ -16,15 +16,14 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../Box2D/Box2D/Common/b2Settings.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/Shapes/b2Shape.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/b2World.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Contacts/b2Contact.ts' />
-///<reference path='../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-
-module box2d {
+import {DEBUG, ENABLE_ASSERTS, b2Assert, b2Log} from '../../../Box2D/Box2D/Common/b2Settings';
+import {b2Vec2, b2Transform, b2Sweep, b2IsValid, b2DotVV, b2MulXV, b2MulTXV, b2MulTRV, b2AddVCrossSV, b2MulRV, b2SubVV} from '../../../Box2D/Box2D/Common/b2Math';
+import {b2Shape, b2MassData} from '../../../Box2D/Box2D/Collision/Shapes/b2Shape';
+import {b2BroadPhase} from '../../../Box2D/Box2D/Collision/b2BroadPhase';
+import {b2FixtureDef, b2Fixture} from '../../../Box2D/Box2D/Dynamics/b2Fixture';
+import {b2World, b2WorldFlag} from '../../../Box2D/Box2D/Dynamics/b2World';
+import {b2ContactEdge} from '../../../Box2D/Box2D/Dynamics/Contacts/b2Contact';
+import {b2JointEdge} from '../../../Box2D/Box2D/Dynamics/Joints/b2Joint';
 
 /// The body type.
 /// static: zero mass, zero velocity, may be manually moved
@@ -1160,7 +1159,7 @@ export class b2Body
 		if (DEBUG)
 		{
 			var bodyIndex: number = this.m_islandIndex;
-		
+
 			b2Log("{\n");
 			b2Log("  var bd: b2BodyDef = new b2BodyDef();\n");
 			var type_str: string = '';
@@ -1274,5 +1273,5 @@ export class b2Body
 	//}
 }
 
-} // module box2d
+
 

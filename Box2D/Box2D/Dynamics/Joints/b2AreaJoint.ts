@@ -1,9 +1,9 @@
-//<reference path='../../../Box2D/Common/b2Settings.ts' />
-//<reference path='../../../Box2D/Common/b2Math.ts' />
-///<reference path='../../../Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../Box2D/Dynamics/Joints/b2DistanceJoint.ts' />
-
-module box2d {
+import {b2Vec2, b2AddVV, b2CrossVV, b2DistanceVV, b2Sq, b2Sqrt, b2SubVV} from '../../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert, b2MakeNumberArray, DEBUG, b2Log, b2_epsilon, b2_maxLinearCorrection, b2_linearSlop} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
+import {b2DistanceJointDef} from '../../Dynamics/Joints/b2DistanceJoint';
+import {b2World} from '../../Dynamics/b2World';
+import {b2Body} from '../../Dynamics/b2Body';
 
 export class b2AreaJointDef extends b2JointDef
 {
@@ -275,6 +275,3 @@ export class b2AreaJoint extends b2Joint
 		return done;
 	}
 }
-
-} // module box2d
-

@@ -1,24 +1,15 @@
-//<reference path='../../../../Box2D/Box2D/Common/b2Math.ts' />
-//<reference path='../../../../Box2D/Box2D/Collision/b2Collision.ts' />
-//<reference path='../../../../Box2D/Box2D/Collision/Shapes/b2Shape.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2Contact.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2CircleContact.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2PolygonContact.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.ts' />
-//<reference path='../../../../Box2D/Box2D/Collision/b2Collision.ts' />
-//<reference path='../../../../Box2D/Box2D/Collision/b2TimeOfImpact.ts' />
-//<reference path='../../../../Box2D/Box2D/Common/b2BlockAllocator.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2Fixture.ts' />
-//<reference path='../../../../Box2D/Box2D/Dynamics/b2World.ts' />
+import {ENABLE_ASSERTS, b2Assert, b2MakeArray} from '../../Common/b2Settings';
+import {b2ShapeType} from '../../Collision/Shapes/b2Shape';
+import {b2Fixture} from '../../Dynamics/b2Fixture';
+import {b2Contact} from '../../Dynamics/Contacts/b2Contact';
 
-module box2d {
+import {b2CircleContact} from '../../Dynamics/Contacts/b2CircleContact';
+import {b2PolygonAndCircleContact} from '../../Dynamics/Contacts/b2PolygonAndCircleContact';
+import {b2PolygonContact} from '../../Dynamics/Contacts/b2PolygonContact';
+import {b2EdgeAndCircleContact} from '../../Dynamics/Contacts/b2EdgeAndCircleContact';
+import {b2EdgeAndPolygonContact} from '../../Dynamics/Contacts/b2EdgeAndPolygonContact';
+import {b2ChainAndCircleContact} from '../../Dynamics/Contacts/b2ChainAndCircleContact';
+import {b2ChainAndPolygonContact} from '../../Dynamics/Contacts/b2ChainAndPolygonContact';
 
 export class b2ContactRegister
 {
@@ -26,8 +17,8 @@ export class b2ContactRegister
 	public createFcn: { (allocator: any): b2Contact; } = null;
 	public destroyFcn: { (contact: b2Contact, allocator: any): void; } = null;
 	public primary: boolean = false;
-}   
-   	 
+}
+
 export class b2ContactFactory
 {
 	public m_allocator: any = null;
@@ -161,5 +152,5 @@ export class b2ContactFactory
 	}
 }
 
-} // module box2d
+
 

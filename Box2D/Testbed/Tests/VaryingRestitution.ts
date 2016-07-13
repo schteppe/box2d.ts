@@ -39,4 +39,4 @@ export class VaryingRestitution extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

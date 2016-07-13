@@ -106,5 +106,5 @@ export function main()
 	return 0;
 }
 
-} // module box2d
+
 

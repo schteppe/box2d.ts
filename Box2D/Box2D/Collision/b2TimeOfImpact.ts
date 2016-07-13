@@ -15,15 +15,10 @@
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
-
-///<reference path='../../../Box2D/Box2D/Common/b2Math.ts' />
-///<reference path='../../../Box2D/Box2D/Collision/b2Distance.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/b2Collision.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2CircleShape.ts' />
-//<reference path='../../../Box2D/Box2D/Collision/Shapes/b2PolygonShape.ts' />
-///<reference path='../../../Box2D/Box2D/Common/b2Timer.ts' />
-
-module box2d {
+import {b2Vec2, b2Transform, b2MulXV, b2SubVV, b2DotVV, b2MidVV, b2MulRV, b2CrossVOne, b2MulTRV, b2NegV, b2Sweep, b2Abs, b2Max} from '../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert, b2_linearSlop, b2_maxPolygonVertices, b2MakeNumberArray} from '../Common/b2Settings';
+import {b2DistanceProxy, b2SimplexCache, b2DistanceInput, b2DistanceOutput, b2Distance} from '../Collision/b2Distance';
+import {b2Timer} from '../Common/b2Timer';
 
 export var b2_toiTime: number = 0;
 export var b2_toiMaxTime: number = 0;
@@ -529,5 +524,5 @@ export function b2TimeOfImpact(output: b2TOIOutput, input: b2TOIInput): void
 	b2_toiTime += time;
 }
 
-} // module box2d
+
 

@@ -39,4 +39,4 @@ export class CollisionFiltering extends Test
 	}
 }
 
-} // module box2d.Testbed
+.Testbed

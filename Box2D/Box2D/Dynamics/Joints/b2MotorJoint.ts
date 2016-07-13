@@ -1,8 +1,9 @@
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2Vec2, b2AddVV, b2CrossVV, b2DistanceVV, b2Sq, b2Sqrt, b2SubVV, b2Clamp, b2CrossSV, b2IsEqualToV, b2IsValid, b2Mat22, b2MulMV, b2MulRV, b2MulSV, b2NegV, b2Rot} from '../../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert, b2MakeNumberArray, DEBUG, b2Log, b2_epsilon, b2_maxLinearCorrection, b2_linearSlop} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
+import {b2DistanceJointDef} from '../../Dynamics/Joints/b2DistanceJoint';
+import {b2World} from '../../Dynamics/b2World';
+import {b2Body} from '../../Dynamics/b2Body';
 
 export class b2MotorJointDef extends b2JointDef
 {
@@ -173,7 +174,7 @@ export class b2MotorJoint extends b2Joint
 		// Compute the effective mass matrix.
 		//this.m_rA = b2Mul(qA, -this.m_localCenterA);
 		var rA: b2Vec2 = b2MulRV(qA, b2NegV(this.m_localCenterA, b2Vec2.s_t0), this.m_rA);
-		//this.m_rB = b2Mul(qB, -this.m_localCenterB); 
+		//this.m_rB = b2Mul(qB, -this.m_localCenterB);
 		var rB: b2Vec2 = b2MulRV(qB, b2NegV(this.m_localCenterB, b2Vec2.s_t0), this.m_rB);
 
 		// J = [-I -r1_skew I r2_skew]
@@ -187,14 +188,14 @@ export class b2MotorJoint extends b2Joint
 
 		var mA: number = this.m_invMassA, mB: number = this.m_invMassB;
 		var iA: number = this.m_invIA, iB: number = this.m_invIB;
-		 
+
 		var K: b2Mat22 = this.m_K;
 		K.ex.x = mA + mB + iA * rA.y * rA.y + iB * rB.y * rB.y;
 		K.ex.y = -iA * rA.x * rA.y - iB * rB.x * rB.y;
 		K.ey.x = K.ex.y;
 		K.ey.y = mA + mB + iA * rA.x * rA.x + iB * rB.x * rB.x;
 
-		//this.m_linearMass = K.GetInverse(); 
+		//this.m_linearMass = K.GetInverse();
 		K.GetInverse(this.m_linearMass);
 
 		this.m_angularMass = iA + iB;
@@ -206,12 +207,12 @@ export class b2MotorJoint extends b2Joint
 		//this.m_linearError = cB + rB - cA - rA - b2Mul(qA, this.m_linearOffset);
 		b2SubVV(
 			b2SubVV(
-				b2AddVV(cB, rB, b2Vec2.s_t0), 
-				b2AddVV(cA, rA, b2Vec2.s_t1), 
+				b2AddVV(cB, rB, b2Vec2.s_t0),
+				b2AddVV(cA, rA, b2Vec2.s_t1),
 				b2Vec2.s_t2),
-			b2MulRV(qA, this.m_linearOffset, b2Vec2.s_t3), 
+			b2MulRV(qA, this.m_linearOffset, b2Vec2.s_t3),
 			this.m_linearError);
-		this.m_angularError = aB - aA - this.m_angularOffset; 
+		this.m_angularError = aB - aA - this.m_angularOffset;
 
 		if (data.step.warmStarting)
 		{
@@ -277,12 +278,12 @@ export class b2MotorJoint extends b2Joint
 			var rB = this.m_rB;
 
 			//b2Vec2 Cdot = vB + b2CrossSV(wB, rB) - vA - b2CrossSV(wA, rA) + inv_h * this.m_correctionFactor * this.m_linearError;
-			var Cdot_v2 = 
+			var Cdot_v2 =
 				b2AddVV(
 					b2SubVV(
-						b2AddVV(vB, b2CrossSV(wB, rB, b2Vec2.s_t0), b2Vec2.s_t0), 
-						b2AddVV(vA, b2CrossSV(wA, rA, b2Vec2.s_t1), b2Vec2.s_t1), b2Vec2.s_t2), 
-					b2MulSV(inv_h * this.m_correctionFactor, this.m_linearError, b2Vec2.s_t3), 
+						b2AddVV(vB, b2CrossSV(wB, rB, b2Vec2.s_t0), b2Vec2.s_t0),
+						b2AddVV(vA, b2CrossSV(wA, rA, b2Vec2.s_t1), b2Vec2.s_t1), b2Vec2.s_t2),
+					b2MulSV(inv_h * this.m_correctionFactor, this.m_linearError, b2Vec2.s_t3),
 					b2MotorJoint.SolveVelocityConstraints_s_Cdot_v2);
 
 			//b2Vec2 impulse = -b2Mul(this.m_linearMass, Cdot);
@@ -349,5 +350,5 @@ export class b2MotorJoint extends b2Joint
 	}
 }
 
-} // module box2d
+
 

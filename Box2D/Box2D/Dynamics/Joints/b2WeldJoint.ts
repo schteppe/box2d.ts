@@ -16,11 +16,9 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-///<reference path='../../../../Box2D/Box2D/Dynamics/Joints/b2Joint.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2Body.ts' />
-///<reference path='../../../../Box2D/Box2D/Dynamics/b2TimeStep.ts' />
-
-module box2d {
+import {b2Vec3, b2Mat33, b2MulM33XY, b2MulM33XYZ, b2Abs, b2MulTXV, b2AddVCrossSV, b2Vec2, b2AddVV, b2CrossVV, b2SubVV, b2IsValid, b2Mat22, b2MulMV, b2MulRV, b2MulSV, b2Rot} from '../../Common/b2Math';
+import {ENABLE_ASSERTS, b2Assert, DEBUG, b2Log, b2_epsilon, b2_pi, b2_linearSlop, b2_angularSlop} from '../../Common/b2Settings';
+import {b2Joint, b2JointDef, b2JointType} from '../../Dynamics/Joints/b2Joint';
 
 /// Weld joint definition. You need to specify local anchor points
 /// where they are attached and the relative body angle. The position
@@ -267,18 +265,18 @@ export class b2WeldJoint extends b2Joint
 				b2WeldJoint.SolveVelocityConstraints_s_Cdot1)
 			var Cdot2: number = wB - wA;
 			//b2Vec3 var Cdot(Cdot1.x, Cdot1.y, Cdot2);
-		
+
 			//b2Vec3 impulse = -b2Mul(m_mass, Cdot);
 			var impulse: b2Vec3 = b2MulM33XYZ(this.m_mass, Cdot1.x, Cdot1.y, Cdot2, b2WeldJoint.SolveVelocityConstraints_s_impulse).SelfNeg();
 			this.m_impulse.SelfAdd(impulse);
-		
+
 			//b2Vec2 P(impulse.x, impulse.y);
 			var P: b2Vec2 = b2WeldJoint.SolveVelocityConstraints_s_P.SetXY(impulse.x, impulse.y);
-		
+
 			//vA -= mA * P;
 			vA.SelfMulSub(mA, P);
 			wA -= iA * (b2CrossVV(this.m_rA, P) + impulse.z);
-		
+
 			//vB += mB * P;
 			vB.SelfMulAdd(mB, P);
 			wB += iB * (b2CrossVV(this.m_rB, P) + impulse.z);
@@ -328,10 +326,10 @@ export class b2WeldJoint extends b2Joint
 		if (this.m_frequencyHz > 0)
 		{
 			//b2Vec2 C1 =  cB + rB - cA - rA;
-			var C1 = 
+			var C1 =
 				b2SubVV(
-					b2AddVV(cB, rB, b2Vec2.s_t0), 
-					b2AddVV(cA, rA, b2Vec2.s_t1), 
+					b2AddVV(cB, rB, b2Vec2.s_t0),
+					b2AddVV(cA, rA, b2Vec2.s_t1),
 					b2WeldJoint.SolvePositionConstraints_s_C1);
 			positionError = C1.GetLength();
 			angularError = 0;
@@ -350,28 +348,28 @@ export class b2WeldJoint extends b2Joint
 		else
 		{
 			//b2Vec2 C1 =  cB + rB - cA - rA;
-			var C1 = 
+			var C1 =
 				b2SubVV(
-					b2AddVV(cB, rB, b2Vec2.s_t0), 
-					b2AddVV(cA, rA, b2Vec2.s_t1), 
+					b2AddVV(cB, rB, b2Vec2.s_t0),
+					b2AddVV(cA, rA, b2Vec2.s_t1),
 					b2WeldJoint.SolvePositionConstraints_s_C1);
 			var C2: number = aB - aA - this.m_referenceAngle;
-		
+
 			positionError = C1.GetLength();
 			angularError = b2Abs(C2);
-		
+
 			//b2Vec3 C(C1.x, C1.y, C2);
-		
+
 			//b2Vec3 impulse = -K.Solve33(C);
 			var impulse: b2Vec3 = K.Solve33(C1.x, C1.y, C2, b2WeldJoint.SolvePositionConstraints_s_impulse).SelfNeg();
-		
+
 			//b2Vec2 P(impulse.x, impulse.y);
 			var P: b2Vec2 = b2WeldJoint.SolvePositionConstraints_s_P.SetXY(impulse.x, impulse.y);
-		
+
 			//cA -= mA * P;
 			cA.SelfMulSub(mA, P);
 			aA -= iA * (b2CrossVV(this.m_rA, P) + impulse.z);
-		
+
 			//cB += mB * P;
 			cB.SelfMulAdd(mB, P);
 			aB += iB * (b2CrossVV(this.m_rB, P) + impulse.z);
@@ -425,7 +423,7 @@ export class b2WeldJoint extends b2Joint
 		{
 			var indexA = this.m_bodyA.m_islandIndex;
 			var indexB = this.m_bodyB.m_islandIndex;
-		
+
 			b2Log("  var jd: b2WeldJointDef = new b2WeldJointDef();\n");
 			b2Log("  jd.bodyA = bodies[%d];\n", indexA);
 			b2Log("  jd.bodyB = bodies[%d];\n", indexB);
@@ -440,5 +438,5 @@ export class b2WeldJoint extends b2Joint
 	}
 }
 
-} // module box2d
+
 
