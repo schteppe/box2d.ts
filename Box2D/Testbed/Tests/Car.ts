@@ -16,8 +16,16 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-import {Test} from '../Framework/Test';
-import {b2Body} from '../../../Box2D/Box2D/Dynamics/b2Body';
+import {Test, Settings, DRAW_STRING_NEW_LINE, KeyCode} from '../Framework/Test';
+import {b2Vec2, b2Max} from '../../../Box2D/Box2D/Common/b2Math';
+import {b2_pi} from '../../../Box2D/Box2D/Common/b2Settings';
+import {b2EdgeShape} from '../../../Box2D/Box2D/Collision/Shapes/b2EdgeShape';
+import {b2PolygonShape} from '../../../Box2D/Box2D/Collision/Shapes/b2PolygonShape';
+import {b2CircleShape} from '../../../Box2D/Box2D/Collision/Shapes/b2CircleShape';
+import {b2Body, b2BodyType, b2BodyDef} from '../../../Box2D/Box2D/Dynamics/b2Body';
+import {b2FixtureDef} from '../../../Box2D/Box2D/Dynamics/b2Fixture';
+import {b2WheelJoint, b2WheelJointDef} from '../../../Box2D/Box2D/Dynamics/Joints/b2WheelJoint';
+import {b2RevoluteJointDef} from '../../../Box2D/Box2D/Dynamics/Joints/b2RevoluteJoint';
 
 // This is a fun demo that shows off the wheel joint
 export class Car extends Test

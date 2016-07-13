@@ -16,7 +16,10 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-import {b2Draw} from '../../Box2D/Common/b2Draw';
+import {b2_pi} from '../../Box2D/Common/b2Settings';
+import {b2Draw, b2Color} from '../../Box2D/Common/b2Draw';
+import {b2AddVV, b2MulSV, b2MulTRV, b2SubVV, b2Vec2} from '../../Box2D/Common/b2Math';
+import {Settings} from './Test';
 
 // This class implements debug drawing callbacks that are invoked
 // inside b2World::Step.

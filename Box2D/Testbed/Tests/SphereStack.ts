@@ -16,8 +16,11 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-import {Test} from '../Framework/Test';
-import {b2Body} from '../../../Box2D/Box2D/Dynamics/b2Body';
+import {Test, Settings} from '../Framework/Test';
+import {b2Vec2} from '../../../Box2D/Box2D/Common/b2Math';
+import {b2EdgeShape} from '../../../Box2D/Box2D/Collision/Shapes/b2EdgeShape';
+import {b2CircleShape} from '../../../Box2D/Box2D/Collision/Shapes/b2CircleShape';
+import {b2Body, b2BodyType, b2BodyDef} from '../../../Box2D/Box2D/Dynamics/b2Body';
 
 export class SphereStack extends Test
 {
@@ -32,29 +35,29 @@ export class SphereStack extends Test
 		this.m_bodies = new Array(SphereStack.e_count);
 
 		{
-			var bd: b2BodyDef = new box2d.b2BodyDef();
+			var bd: b2BodyDef = new b2BodyDef();
 			var ground: b2Body = this.m_world.CreateBody(bd);
 
-			var edge_shape: b2EdgeShape = new box2d.b2EdgeShape();
-			edge_shape.SetAsEdge(new box2d.b2Vec2(-40.0, 0.0), new box2d.b2Vec2(40.0, 0.0));
+			var edge_shape: b2EdgeShape = new b2EdgeShape();
+			edge_shape.SetAsEdge(new b2Vec2(-40.0, 0.0), new b2Vec2(40.0, 0.0));
 			ground.CreateFixture2(edge_shape, 0.0);
 		}
 
 		{
-			var circle_shape: b2CircleShape = new box2d.b2CircleShape();
+			var circle_shape: b2CircleShape = new b2CircleShape();
 			circle_shape.m_radius = 1.0;
 
 			for (var i: number = 0; i < SphereStack.e_count; ++i)
 			{
-				var bd: b2BodyDef = new box2d.b2BodyDef();
-				bd.type = box2d.b2BodyType.b2_dynamicBody;
+				var bd: b2BodyDef = new b2BodyDef();
+				bd.type = b2BodyType.b2_dynamicBody;
 				bd.position.SetXY(0.0, 4.0 + 3.0 * i);
 
 				this.m_bodies[i] = this.m_world.CreateBody(bd);
 
 				this.m_bodies[i].CreateFixture2(circle_shape, 1.0);
 
-				this.m_bodies[i].SetLinearVelocity(new box2d.b2Vec2(0.0, -50.0));
+				this.m_bodies[i].SetLinearVelocity(new b2Vec2(0.0, -50.0));
 			}
 		}
 	}

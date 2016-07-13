@@ -2,8 +2,6 @@
 
 declare function requestAnimFrame(callback: any): number;
 
-module main {
-
 var m_app = null;
 
 export function start()
@@ -19,6 +17,3 @@ function loop()
 
 	m_app.SimulationLoop();
 }
-
-} // module main
-
