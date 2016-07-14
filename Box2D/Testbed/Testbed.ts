@@ -16,6 +16,4 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-import {Main} from '../../Box2D/Testbed/Framework/Main';
-
-export = Main;
+export {Main} from '../../Box2D/Testbed/Framework/Main';

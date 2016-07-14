@@ -1,4 +1,4 @@
-///<reference path='../../../Box2D/Testbed/Framework/Main.ts' />
+import {Main} from '../../Testbed/Framework/Main';
 
 declare function requestAnimFrame(callback: any): number;
 
@@ -6,7 +6,7 @@ var m_app = null;
 
 export function start()
 {
-	m_app = new box2d.Testbed.Main();
+	m_app = new Main();
 
 	loop();
 }
