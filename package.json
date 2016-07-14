@@ -4,8 +4,11 @@
 	"description": "TypeScript port of Box2D",
 	"main": "index.js",
 	"scripts": {
-		"build": "webpack",
-		"build-min": "webpack --config webpack.config.min.js"
+		"build": "npm run build-helloworld && npm run build-testbed && npm run build-minified && npm run build-main",
+		"build-helloworld": "webpack --config webpack.config.helloworld.js",
+		"build-testbed": "webpack --config webpack.config.testbed.js",
+		"build-minified": "webpack --config webpack.config.min.js",
+		"build-main": "webpack --config webpack.config.js"
 	},
 	"repository": {
 		"type": "git",
