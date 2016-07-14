@@ -8,7 +8,8 @@
 		"build-helloworld": "webpack --config webpack.config.helloworld.js",
 		"build-testbed": "webpack --config webpack.config.testbed.js",
 		"build-minified": "webpack --config webpack.config.min.js",
-		"build-main": "webpack --config webpack.config.js"
+		"build-main": "webpack --config webpack.config.js",
+		"postinstall": "tsc"
 	},
 	"repository": {
 		"type": "git",
